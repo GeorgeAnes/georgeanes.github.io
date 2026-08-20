@@ -1,0 +1,90 @@
+[
+  {
+    "description": "",
+    "name": "vfrm-agentic-design-assistant",
+    "primaryLanguage": {
+      "name": "Python"
+    },
+    "stargazerCount": 0,
+    "url": "https://github.com/GeorgeAnes/vfrm-agentic-design-assistant"
+  },
+  {
+    "description": "",
+    "name": "GeorgeAnes",
+    "primaryLanguage": null,
+    "stargazerCount": 0,
+    "url": "https://github.com/GeorgeAnes/GeorgeAnes"
+  },
+  {
+    "description": "",
+    "name": "facial-expression-recognition-ml",
+    "primaryLanguage": {
+      "name": "Jupyter Notebook"
+    },
+    "stargazerCount": 1,
+    "url": "https://github.com/GeorgeAnes/facial-expression-recognition-ml"
+  },
+  {
+    "description": "",
+    "name": "process-mining-kpi-dashboard",
+    "primaryLanguage": {
+      "name": "TypeScript"
+    },
+    "stargazerCount": 1,
+    "url": "https://github.com/GeorgeAnes/process-mining-kpi-dashboard"
+  },
+  {
+    "description": "",
+    "name": "enterprise-ai-document-risk-auditor",
+    "primaryLanguage": {
+      "name": "Python"
+    },
+    "stargazerCount": 1,
+    "url": "https://github.com/GeorgeAnes/enterprise-ai-document-risk-auditor"
+  },
+  {
+    "description": "",
+    "name": "smartphone-activity-recognition",
+    "primaryLanguage": {
+      "name": "Jupyter Notebook"
+    },
+    "stargazerCount": 1,
+    "url": "https://github.com/GeorgeAnes/smartphone-activity-recognition"
+  },
+  {
+    "description": "",
+    "name": "petri-net-ga-optimization",
+    "primaryLanguage": {
+      "name": "Python"
+    },
+    "stargazerCount": 1,
+    "url": "https://github.com/GeorgeAnes/petri-net-ga-optimization"
+  },
+  {
+    "description": "",
+    "name": "camera-calibration-nerfstudio-pipeline",
+    "primaryLanguage": {
+      "name": "Python"
+    },
+    "stargazerCount": 0,
+    "url": "https://github.com/GeorgeAnes/camera-calibration-nerfstudio-pipeline"
+  },
+  {
+    "description": "",
+    "name": "multi-drone-ltl-formation-control",
+    "primaryLanguage": {
+      "name": "MATLAB"
+    },
+    "stargazerCount": 0,
+    "url": "https://github.com/GeorgeAnes/multi-drone-ltl-formation-control"
+  },
+  {
+    "description": "",
+    "name": "aero-mpc-spc-koopman-control",
+    "primaryLanguage": {
+      "name": "MATLAB"
+    },
+    "stargazerCount": 1,
+    "url": "https://github.com/GeorgeAnes/aero-mpc-spc-koopman-control"
+  }
+]
