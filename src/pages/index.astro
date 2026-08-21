@@ -71,7 +71,11 @@ const focusAreas = [
         </div>
       </div>
 
-      {heroProject && <ProjectCard project={heroProject} size="lead" />}
+      {
+        heroProject && (
+          <ProjectCard project={heroProject} size="lead" headingLevel={2} priority />
+        )
+      }
     </div>
   </section>
 
