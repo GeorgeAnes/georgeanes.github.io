@@ -6,9 +6,22 @@ interface Props {
   project: CollectionEntry<'projects'>;
   /** `lead` is the single large card; `standard` fills the rest of the grid. */
   size?: 'lead' | 'standard';
+  /**
+   * Must follow the surrounding document outline. A card sitting directly
+   * under the page h1 is an h2; one inside an h2 section is an h3. Skipping a
+   * level fails the heading-order audit.
+   */
+  headingLevel?: 2 | 3;
+  /**
+   * Set when this card holds the page's largest contentful element, which is
+   * the case for the card in the home page hero. Without it the image is
+   * discovered late and LCP pays a load delay.
+   */
+  priority?: boolean;
 }
 
-const { project, size = 'standard' } = Astro.props;
+const { project, size = 'standard', headingLevel = 3, priority = false } = Astro.props;
+const Heading = `h${headingLevel}` as 'h2' | 'h3';
 const { title, summary, stack, heroImage, heroImageAlt } = project.data;
 
 const isLead = size === 'lead';
@@ -31,6 +44,7 @@ const shownStack = stack.slice(0, 3);
           alt={heroImageAlt}
           formats={['avif', 'webp']}
           widths={isLead ? [480, 768, 1024] : [360, 640]}
+          priority={priority}
           sizes={
             isLead
               ? '(min-width: 1024px) 640px, 100vw'
@@ -43,12 +57,12 @@ const shownStack = stack.slice(0, 3);
   }
 
   <div class:list={['flex flex-1 flex-col', isLead ? 'p-7' : 'p-6']}>
-    <h3 class:list={[isLead ? 'text-title' : 'text-lg', 'font-semibold']}>
+    <Heading class:list={[isLead ? 'text-title' : 'text-lg', 'font-semibold']}>
       {/* Stretched link: the whole card is the target, but only one tab stop. */}
       <a href={`/projects/${project.id}/`} class="after:absolute after:inset-0">
         {title}
       </a>
-    </h3>
+    </Heading>
 
     <p class:list={['text-muted mt-3 flex-1', isLead ? 'max-w-[52ch]' : 'text-sm']}>
       {summary}

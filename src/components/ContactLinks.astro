@@ -18,13 +18,11 @@ const links = [
     label: CONTACT_EMAIL,
     href: `mailto:${CONTACT_EMAIL}`,
     icon: 'ph:envelope-simple',
-    describe: 'Email George Anesiadis',
   },
   {
     label: GITHUB_URL.replace('https://', ''),
     href: GITHUB_URL,
     icon: 'ph:github-logo',
-    describe: 'George Anesiadis on GitHub',
   },
 ];
 ---
@@ -41,7 +39,6 @@ const links = [
         <a
           href={link.href}
           rel="noopener"
-          aria-label={link.describe}
           class="text-muted hover:text-accent group inline-flex items-center gap-2 font-mono text-sm transition-colors"
           style="transition-duration: var(--duration-fast); transition-timing-function: var(--ease-out-quint)"
         >

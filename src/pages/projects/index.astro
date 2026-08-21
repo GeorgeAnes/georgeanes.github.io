@@ -33,12 +33,12 @@ const [lead, ...rest] = projects;
         <p class="text-muted mt-16 font-mono text-sm">No projects published yet.</p>
       ) : (
         <div class="mt-14 grid gap-6">
-          {lead && <ProjectCard project={lead} size="lead" />}
+          {lead && <ProjectCard project={lead} size="lead" headingLevel={2} priority />}
 
           {rest.length > 0 && (
             <div class="grid gap-6 sm:grid-cols-2">
               {rest.map((project) => (
-                <ProjectCard project={project} />
+                <ProjectCard project={project} headingLevel={2} />
               ))}
             </div>
           )}

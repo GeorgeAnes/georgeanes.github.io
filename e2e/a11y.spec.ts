@@ -85,3 +85,29 @@ test.describe('keyboard traversal', () => {
     );
   });
 });
+
+/*
+ * Lighthouse flagged a skipped heading level that the axe sweep above let
+ * through, because axe rates heading-order as moderate rather than serious.
+ * Checked explicitly so the regression cannot come back quietly.
+ */
+for (const { name, path } of PAGES) {
+  test(`${name} has a heading outline with no skipped levels`, async ({ page }) => {
+    await page.goto(path);
+
+    const levels = await page.$$eval('h1, h2, h3, h4, h5, h6', (headings) =>
+      headings.map((h) => Number(h.tagName[1])),
+    );
+
+    expect(levels[0], 'the first heading should be the h1').toBe(1);
+
+    const skips: string[] = [];
+    for (let i = 1; i < levels.length; i++) {
+      if (levels[i] - levels[i - 1] > 1) {
+        skips.push(`h${levels[i - 1]} jumps to h${levels[i]} at position ${i}`);
+      }
+    }
+
+    expect(skips, `heading outline: ${levels.map((l) => `h${l}`).join(' ')}`).toEqual([]);
+  });
+}
