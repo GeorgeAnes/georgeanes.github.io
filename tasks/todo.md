@@ -40,12 +40,12 @@ Legend: **[G]** = slice gate, do not proceed past it while red.
   - Verify: built `dist/` links and canonicals are root-absolute, not `/portfolio/…`.
   - Files: `astro.config.mjs`
 
-- [ ] **D-1 · CI workflow**
+- [x] **D-1 · CI workflow** ✅ 2026-08-21
   - Acceptance: `ci.yml` runs `npm ci && npm run verify` on Node 24 for every push and PR.
   - Verify: workflow green in Actions.
   - Files: `.github/workflows/ci.yml`
 
-- [ ] **D-2 · Create `georgeanes.github.io` repo and enable Pages**
+- [x] **D-2 · Create `georgeanes.github.io` repo and enable Pages** ✅ 2026-08-21 (authorized)
   - ⚠️ **Ask-first boundary** (`SPEC.md`): creating the public repo and enabling Pages
     is George's call to trigger. Confirm before running.
   - Acceptance: public repo exists, Pages source = GitHub Actions, Actions has
@@ -53,14 +53,15 @@ Legend: **[G]** = slice gate, do not proceed past it while red.
   - Verify: Pages settings show "GitHub Actions" as source.
   - Files: — (GitHub settings)
 
-- [ ] **D-3 · Deploy workflow**
+- [x] **D-3 · Deploy workflow** ✅ 2026-08-21
   - Acceptance: `deploy.yml` builds and publishes `dist/` to Pages on the default branch
     via `actions/deploy-pages`, with a concurrency group.
   - Verify: **`https://georgeanes.github.io/` returns 200**; a fresh commit updates it
     within 5 minutes.
   - Files: `.github/workflows/deploy.yml`
 
-- [ ] **[G] Gate 1** — `npm run verify` green from clean `npm ci`; live URL returns 200;
+- [x] **[G] Gate 1** ✅ 2026-08-21 — CI green from clean `npm ci` (52s); https://georgeanes.github.io/ returns 200; deploy 40s, well under 5 min.
+  Criteria: `npm run verify` green from clean `npm ci`; live URL returns 200;
   commit-to-live under 5 min. *(SC 1, SC 9)*
 
 ---
