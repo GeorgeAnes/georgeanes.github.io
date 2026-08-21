@@ -3,6 +3,9 @@ dist/
 node_modules/
 package-lock.json
 my-repos.json
+coverage/
+playwright-report/
+test-results/
 
 # Spec and planning documents are hand-formatted for readability.
 # Prettier reflows prose and widens tables, which is churn, not improvement.

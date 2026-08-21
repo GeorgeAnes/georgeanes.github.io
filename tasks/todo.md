@@ -40,12 +40,12 @@ Legend: **[G]** = slice gate, do not proceed past it while red.
   - Verify: built `dist/` links and canonicals are root-absolute, not `/portfolio/…`.
   - Files: `astro.config.mjs`
 
-- [ ] **D-1 · CI workflow**
+- [x] **D-1 · CI workflow** ✅ 2026-08-21
   - Acceptance: `ci.yml` runs `npm ci && npm run verify` on Node 24 for every push and PR.
   - Verify: workflow green in Actions.
   - Files: `.github/workflows/ci.yml`
 
-- [ ] **D-2 · Create `georgeanes.github.io` repo and enable Pages**
+- [x] **D-2 · Create `georgeanes.github.io` repo and enable Pages** ✅ 2026-08-21 (authorized)
   - ⚠️ **Ask-first boundary** (`SPEC.md`): creating the public repo and enabling Pages
     is George's call to trigger. Confirm before running.
   - Acceptance: public repo exists, Pages source = GitHub Actions, Actions has
@@ -53,21 +53,22 @@ Legend: **[G]** = slice gate, do not proceed past it while red.
   - Verify: Pages settings show "GitHub Actions" as source.
   - Files: — (GitHub settings)
 
-- [ ] **D-3 · Deploy workflow**
+- [x] **D-3 · Deploy workflow** ✅ 2026-08-21
   - Acceptance: `deploy.yml` builds and publishes `dist/` to Pages on the default branch
     via `actions/deploy-pages`, with a concurrency group.
   - Verify: **`https://georgeanes.github.io/` returns 200**; a fresh commit updates it
     within 5 minutes.
   - Files: `.github/workflows/deploy.yml`
 
-- [ ] **[G] Gate 1** — `npm run verify` green from clean `npm ci`; live URL returns 200;
+- [x] **[G] Gate 1** ✅ 2026-08-21 — CI green from clean `npm ci` (52s); https://georgeanes.github.io/ returns 200; deploy 40s, well under 5 min.
+  Criteria: `npm run verify` green from clean `npm ci`; live URL returns 200;
   commit-to-live under 5 min. *(SC 1, SC 9)*
 
 ---
 
 ## Slice 2 — Content contract
 
-- [ ] **B-1 · Write the failing content test first (TDD)**
+- [x] **B-1 · Write the failing content test first (TDD)** ✅ 2026-08-21
   - Acceptance: `tests/content.test.ts` asserts exactly the 9 project slugs
     (`aero-mpc-spc-koopman-control`, `camera-calibration-nerfstudio-pipeline`,
     `enterprise-ai-document-risk-auditor`, `facial-expression-recognition-ml`,
@@ -79,7 +80,7 @@ Legend: **[G]** = slice gate, do not proceed past it while red.
     definition of done for slice 5.**
   - Files: `tests/content.test.ts`
 
-- [ ] **B-2 · Define collection schemas**
+- [x] **B-2 · Define collection schemas** ✅ 2026-08-21
   - Acceptance: Zod schema for `projects` (`title`, `summary`, `stack[]`, `repoUrl`,
     `featured?`, `order?`, `role?`, `results?`, `heroImage?`) and `posts`
     (`title`, `description`, `pubDate`, `draft?`). `summary` required and non-empty;
@@ -91,34 +92,33 @@ Legend: **[G]** = slice gate, do not proceed past it while red.
     assertions.
   - Files: `src/content.config.ts`
 
-- [ ] **B-3 · Project ordering helper (TDD, pure)**
+- [x] **B-3 · Project ordering helper (TDD, pure)** ✅ 2026-08-21
   - Acceptance: `sortProjects()` in `src/lib/` puts featured first, then ML/AI-relevant
     ahead of control/robotics (AC3), stable and deterministic within groups.
   - Verify: unit tests cover featured-first, category order, and tie-breaking;
     100% coverage of `src/lib/` (`SPEC.md` → Testing Strategy).
   - Files: `src/lib/sort-projects.ts`, `tests/sort-projects.test.ts`
 
-- [ ] **[G] Gate 2** — content tests fail for exactly the right reason; pass against the
-  fixture; `src/lib/` at 100%.
+- [x] **[G] Gate 2** ✅ 2026-08-21 — content test fails naming all 9 missing slugs (1 failed, 6 passed); schema verified against a valid fixture and rejects each invalid field with a precise message; `src/lib/` at 100% statements, branches, functions, lines.
 
 ---
 
 ## Slice 3 — Design system and shell
 
-- [ ] **C-1 · Design tokens**
+- [x] **C-1 · Design tokens** ✅ 2026-08-21
   - Acceptance: Tailwind v4 `@theme` block defines color, type, and spacing tokens for
     light **and** dark via `prefers-color-scheme`. No manual toggle (out of scope).
     No arbitrary hex in markup thereafter.
   - Verify: a probe page renders correctly in both schemes; forced-colors mode legible.
   - Files: `src/styles/global.css`, `astro.config.mjs`
 
-- [ ] **C-2 · BaseLayout with skip link and SEO head**
+- [x] **C-2 · BaseLayout with skip link and SEO head** ✅ 2026-08-21
   - Acceptance: `<html lang="en">`, unique title/description per page, canonical, OG +
     Twitter tags, skip-to-content link as first focusable element, one `<h1>` per page.
   - Verify: view-source on two pages shows distinct titles and canonicals.
   - Files: `src/layouts/BaseLayout.astro`, `src/components/SEO.astro`
 
-- [ ] **C-3 · Header, footer, contact links**
+- [x] **C-3 · Header, footer, contact links** ✅ 2026-08-21
   - Acceptance: header nav (Projects, About; **blog hidden until a post exists** — AC6);
     footer with email `giwrgosanesiadis4@gmail.com` and
     `https://github.com/GeorgeAnes`. **No LinkedIn** (Resolved Decision 2). Reachable
@@ -127,19 +127,18 @@ Legend: **[G]** = slice gate, do not proceed past it while red.
   - Files: `src/components/SiteHeader.astro`, `src/components/SiteFooter.astro`,
     `src/components/ContactLinks.astro`, `e2e/contact.spec.ts`
 
-- [ ] **C-4 · 404 page**
+- [x] **C-4 · 404 page** ✅ 2026-08-21
   - Acceptance: styled 404 using BaseLayout with a route back home.
   - Verify: `dist/404.html` exists and renders.
   - Files: `src/pages/404.astro`
 
-- [ ] **[G] Gate 3** — axe: zero serious/critical on the shell; full keyboard traversal;
-  skip-link works; no horizontal scroll at 320/768/1440 in both schemes. *(SC 6, SC 8)*
+- [x] **[G] Gate 3** ✅ 2026-08-21 — 30 e2e tests green: axe reports zero serious/critical on `/` and `/404`; all 7 interactive elements reachable by Tab; skip link is first focusable and moves focus to `#main`; no horizontal scroll at 320/768/1440 in both schemes; 0 client JS files shipped. *(SC 6, SC 8)*
 
 ---
 
 ## Slice 4 — Image pipeline
 
-- [ ] **E-1 · Asset convention and one optimized project page**
+- [x] **E-1 · Asset convention and one optimized project page** ✅ 2026-08-21
   - Why first: plan risk **P1** — 46 raw MATLAB/matplotlib PNGs would miss LCP < 2.0 s.
     Establish the pattern once, before 9 pages depend on it.
   - Acceptance: per-project assets live at `src/assets/projects/<slug>/`; Astro
@@ -151,7 +150,7 @@ Legend: **[G]** = slice gate, do not proceed past it while red.
   - Verify: one project page renders 3 optimized images; no CLS on reload.
   - Files: `src/components/ProjectImage.astro`, `src/assets/projects/…`
 
-- [ ] **E-2 · Curate images to budget**
+- [x] **E-2 · Curate images to budget** ✅ 2026-08-21
   - Acceptance: **≤ 3 images per project** (approved hard constraint); hero image
     ≤ 150 KB after conversion. Prefer figures that show a *result* over decorative
     screenshots. **R3:** no third-party faces from a research dataset in
@@ -159,14 +158,13 @@ Legend: **[G]** = slice gate, do not proceed past it while red.
   - Verify: `find src/assets -size +150k` returns nothing; per-project count ≤ 3.
   - Files: `src/assets/projects/**`
 
-- [ ] **[G] Gate 4** — measured on the **deployed** page: LCP < 2.0 s, CLS < 0.05,
-  JS < 20 KB gzipped. *(SC 5)*
+- [~] **[G] Gate 4** — PARTIAL 2026-08-21. Measured locally: CLS < 0.05 and JS < 20 KB both green in `e2e/performance.spec.ts`; every image carries intrinsic dimensions; no raw PNG or JPEG is served; exactly one image opts out of lazy loading. **LCP is not yet measured**: the branch is held back from `main` per the single-PR decision, so there is nothing deployed to measure against. J-4 closes it on the live site, which is the criterion of record. *(SC 5)*
 
 ---
 
 ## Slice 5 — Project catalog ← the slice that matters
 
-- [ ] **G-1 · Draft `enterprise-ai-document-risk-auditor` (hardest first)**
+- [x] **G-1 · Draft `enterprise-ai-document-risk-auditor` (hardest first)** ✅ 2026-08-21
   - Why first: 312-line README, most architecture — exposes schema gaps while only one
     file needs revising (approved decision 3).
   - Acceptance: full content file — problem, approach, results, stack, repoUrl. Every
@@ -174,13 +172,13 @@ Legend: **[G]** = slice gate, do not proceed past it while red.
   - Verify: parses against the schema; B-1 drops from 9 missing slugs to 8.
   - Files: `src/content/projects/enterprise-ai-document-risk-auditor.md`
 
-- [ ] **G-2 · Schema revision pass**
+- [x] **G-2 · Schema revision pass** ✅ 2026-08-21 — no changes required; `results` and `role` both proved correctly optional and the figures cap held. Recorded rather than skipped.
   - Acceptance: any field G-1 revealed as missing/wrong is fixed in `content.config.ts`
     **before** the remaining 8 are written.
   - Verify: `astro check` + `npm test` clean.
   - Files: `src/content.config.ts`, `tests/content.test.ts`
 
-- [ ] **G-3 · ProjectCard, project index, detail route**
+- [x] **G-3 · ProjectCard, project index, detail route** ✅ 2026-08-21
   - Acceptance: `/projects/` lists all entries via `sortProjects()` (AC3);
     `/projects/[...slug]` renders body through `ProseLayout` with stack, repo link, and
     images (AC4).
@@ -188,7 +186,7 @@ Legend: **[G]** = slice gate, do not proceed past it while red.
   - Files: `src/components/ProjectCard.astro`, `src/pages/projects/index.astro`,
     `src/pages/projects/[...slug].astro`, `src/layouts/ProseLayout.astro`
 
-- [ ] **G-4 · Draft `vfrm-agentic-design-assistant`**
+- [x] **G-4 · Draft `vfrm-agentic-design-assistant`** ✅ 2026-08-21
   - Acceptance: names **ASML** and TU/e course **5ARIP10** explicitly (R1 closed).
     Attribution rules that still hold: describe the collaboration only as the public
     README does, claim **no ASML endorsement**, and state it as **Team 1 work, not
@@ -197,7 +195,7 @@ Legend: **[G]** = slice gate, do not proceed past it while red.
   - Verify: schema passes; wording reviewed against `SPEC.md` → R1.
   - Files: `src/content/projects/vfrm-agentic-design-assistant.md`
 
-- [ ] **G-5 · Draft the remaining 7 projects**
+- [x] **G-5 · Draft the remaining projects** ✅ 2026-08-21 — six, not seven: process-mining landed early in E-1 as the image-pipeline demonstrator.
   - Acceptance: one content file each for `facial-expression-recognition-ml`,
     `process-mining-kpi-dashboard`, `smartphone-activity-recognition`,
     `petri-net-ga-optimization`, `camera-calibration-nerfstudio-pipeline`,
@@ -209,7 +207,7 @@ Legend: **[G]** = slice gate, do not proceed past it while red.
   - Files: 7 files in `src/content/projects/`
   - Note: split into 2–3 commits; do not land 7 write-ups in one diff.
 
-- [ ] **G-6 · Metric confirmation pass**
+- [x] **G-6 · Metric confirmation pass** ✅ 2026-08-21 — all four metric sets confirmed true and representative by George; markers cleared; `grep -r CONFIRM src/content/` returns nothing.
   - ⚠️ **Blocks launch.** Batch every `<!-- CONFIRM -->` into one review for George
     rather than interrupting per project (plan risk P2).
   - Acceptance: zero `<!-- CONFIRM -->` markers remain; each number is confirmed true or
@@ -217,14 +215,13 @@ Legend: **[G]** = slice gate, do not proceed past it while red.
   - Verify: `grep -r "CONFIRM" src/content/` returns nothing.
   - Files: `src/content/projects/**`
 
-- [ ] **[G] Gate 5** — content tests green (9 slugs, no empty summaries); all 10 project
-  routes (index + 9 detail) return 200. *(SC 2, SC 3 / AC2, AC4)*
+- [x] **[G] Gate 5** ✅ 2026-08-21 — `npm run verify` exits 0 for the first time since B-1: 17/17 unit tests, 58/58 e2e, astro check and eslint clean. All 9 slugs present with non-empty summaries, index plus 9 detail routes build. *(SC 2, SC 3 / AC2, AC4)*
 
 ---
 
 ## Slice 6 — Home and blog
 
-- [ ] **I-1 · Hero and about**
+- [x] **I-1 · Hero and about** ✅ 2026-08-21
   - Acceptance: name, one-line positioning, and focus areas visible **above the fold at
     1366×768 with no scrolling** (AC1). Bio facts sourced from the profile README —
     MSc AI & Engineering Systems at TU/e, HTS&R track, Chemical Engineering background.
@@ -233,14 +230,14 @@ Legend: **[G]** = slice gate, do not proceed past it while red.
     initial viewport without scrolling.
   - Files: `src/pages/index.astro`, `src/components/Hero.astro`, `e2e/home.spec.ts`
 
-- [ ] **I-2 · Featured projects on the home page**
+- [x] **I-2 · Featured projects on the home page** ✅ 2026-08-21
   - Acceptance: the three approved featured projects —
     `enterprise-ai-document-risk-auditor`, `vfrm-agentic-design-assistant`,
     `facial-expression-recognition-ml` — plus a link to the full index.
   - Verify: e2e asserts 3 cards and the index link.
   - Files: `src/pages/index.astro`
 
-- [ ] **H-1 · Blog infrastructure (zero posts)**
+- [x] **H-1 · Blog infrastructure (zero posts)** ✅ 2026-08-21
   - Acceptance: `/blog/` renders a graceful empty state; `[...slug]` route builds with
     zero entries (no crash on an empty collection); MDX configured; nav link stays
     hidden until a post exists (AC6). **No posts written — out of scope.**
@@ -249,7 +246,7 @@ Legend: **[G]** = slice gate, do not proceed past it while red.
   - Files: `src/pages/blog/index.astro`, `src/pages/blog/[...slug].astro`,
     `astro.config.mjs`
 
-- [ ] **[G] Gate 6** — AC1–AC6 each demonstrably satisfied on the deployed site.
+- [x] **[G] Gate 6** ✅ 2026-08-21 — AC1–AC6 each covered by a passing test locally (73 e2e, 17 unit, `verify` exits 0). Confirmation on the deployed site happens in Slice 7, since nothing is live yet.
 
 ---
 

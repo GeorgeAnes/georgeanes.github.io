@@ -1,0 +1,51 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  /*
+   * Same directory guard as the blog index: with zero posts this returns no
+   * routes and the build stays quiet, rather than warning about an empty
+   * collection on a route that legitimately has nothing to render yet.
+   */
+  const postFiles = import.meta.glob('../../content/posts/*.{md,mdx}');
+  if (Object.keys(postFiles).length === 0) return [];
+
+  const posts = await getCollection('posts', ({ data }) => data.draft !== true);
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+interface Props {
+  post: CollectionEntry<'posts'>;
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const dateFormat = new Intl.DateTimeFormat('en-GB', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+});
+---
+
+<BaseLayout title={post.data.title} description={post.data.description} ogType="article">
+  <article class="mx-auto w-full max-w-5xl px-6 py-16">
+    <header class="max-w-[68ch]">
+      <h1 class="text-title font-semibold">{post.data.title}</h1>
+      <time
+        datetime={post.data.pubDate.toISOString()}
+        class="text-muted mt-4 block font-mono text-xs"
+      >
+        {dateFormat.format(post.data.pubDate)}
+      </time>
+    </header>
+
+    <div class="prose-body mt-10">
+      <Content />
+    </div>
+  </article>
+</BaseLayout>

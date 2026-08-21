@@ -1,1 +1,221 @@
 @import 'tailwindcss';
+
+/*
+ * Self-hosted, bundled by Vite. No external requests, so nothing depends on a
+ * third-party font host being up or on what it logs. Each @font-face carries a
+ * unicode-range, so a browser downloads only the latin subset (~29 KB per
+ * family) and never fetches the cyrillic, greek or vietnamese cuts.
+ * Italic is deliberately not imported: emphasis uses weight, and skipping it
+ * keeps another 31 KB per family off the wire.
+ */
+@import '@fontsource-variable/geist/wght.css';
+@import '@fontsource-variable/geist-mono/wght.css';
+
+/*
+ * Design tokens. See tasks/design-direction.md for the reasoning behind the
+ * palette, the dials (variance 7, motion 4, density 4), and the bans.
+ *
+ * Every foreground/background pair below was checked against WCAG by
+ * calculation rather than by eye, and `e2e/theme.spec.ts` re-checks what the
+ * browser actually paints in both schemes on every CI run. If you change a
+ * lightness value and that suite goes red, the palette regressed, not the test.
+ *
+ * Two border tokens on purpose:
+ *   --ui-border         decorative hairlines and dividers. Low contrast is
+ *                       correct here; WCAG 1.4.11 does not apply to decoration.
+ *   --ui-border-strong  the sole visual boundary of a control (input outlines,
+ *                       button outlines). Holds 3:1 against both bg and surface.
+ */
+
+:root {
+  color-scheme: light dark;
+
+  /* Light. Neutrals carry a faint warm cast; the whole palette stays in one
+     temperature family rather than mixing warm and cool greys. */
+  --ui-bg: oklch(0.985 0.002 70);
+  --ui-surface: oklch(0.965 0.004 70);
+  --ui-border: oklch(0.895 0.005 70);
+  --ui-border-strong: oklch(0.605 0.012 60);
+  --ui-text: oklch(0.245 0.008 60);
+  --ui-muted: oklch(0.495 0.012 60);
+
+  /* One accent for the entire site, locked. Vermilion rather than the
+     AI-default purple/blue glow, and it sits naturally beside the matplotlib
+     and MATLAB figures the project pages are built around. */
+  --ui-accent: oklch(0.545 0.17 38);
+  --ui-on-accent: oklch(0.995 0.002 70);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ui-bg: oklch(0.175 0.005 60);
+    --ui-surface: oklch(0.215 0.006 60);
+    --ui-border: oklch(0.315 0.008 60);
+    --ui-border-strong: oklch(0.52 0.012 60);
+    --ui-text: oklch(0.945 0.004 60);
+    --ui-muted: oklch(0.7 0.01 60);
+    --ui-accent: oklch(0.76 0.15 52);
+    --ui-on-accent: oklch(0.185 0.02 50);
+  }
+}
+
+/*
+ * `inline` makes the generated utilities reference the custom property rather
+ * than inlining its computed value, which is what lets one set of utilities
+ * respond to prefers-color-scheme.
+ */
+@theme inline {
+  --color-bg: var(--ui-bg);
+  --color-surface: var(--ui-surface);
+  --color-border: var(--ui-border);
+  --color-border-strong: var(--ui-border-strong);
+  --color-text: var(--ui-text);
+  --color-muted: var(--ui-muted);
+  --color-accent: var(--ui-accent);
+  --color-on-accent: var(--ui-on-accent);
+
+  /* Geist for display and body, Geist Mono for metadata, stack labels and
+     figure captions. Mono is honest here: the content is genuinely technical. */
+  --font-display:
+    'Geist Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+  --font-mono:
+    'Geist Mono Variable', ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo,
+    Consolas, monospace;
+
+  /* Display sizes are deliberately restrained. Hierarchy comes from weight,
+     colour and space, not from raw scale. */
+  --text-display: 2.75rem;
+  --text-display--line-height: 1.08;
+  --text-display--letter-spacing: -0.022em;
+  --text-title: 1.75rem;
+  --text-title--line-height: 1.18;
+  --text-title--letter-spacing: -0.014em;
+
+  /* One radius scale. Documented rule: cards and panels use lg, controls and
+     inputs use md, tags and inline chips use sm. Nothing is fully pill. */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.625rem;
+  --radius-lg: 0.875rem;
+
+  /* MOTION_INTENSITY 4: CSS only, short, and eased out. No library. */
+  --ease-out-quint: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-fast: 150ms;
+  --duration-base: 250ms;
+}
+
+@layer base {
+  body {
+    background-color: var(--ui-bg);
+    color: var(--ui-text);
+    font-family: var(--font-display);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Accent-coloured ring clears 3:1 against the background in both modes. */
+  :focus-visible {
+    outline: 2px solid var(--ui-accent);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  ::selection {
+    background-color: var(--ui-accent);
+    color: var(--ui-on-accent);
+  }
+
+  /* Long-form measure, applied where prose actually lives rather than globally. */
+  :where(p, li) {
+    text-wrap: pretty;
+  }
+
+  :where(h1, h2, h3) {
+    text-wrap: balance;
+  }
+}
+
+/*
+ * Mandatory at MOTION_INTENSITY > 3. Collapses every transition and animation
+ * rather than relying on each component to remember.
+ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/*
+ * Long-form body copy for project and post content. Written as one component
+ * class rather than a pile of arbitrary variants on the wrapper, so headings,
+ * lists, links and code all get styled and nothing silently falls through when
+ * a write-up uses an element the wrapper did not anticipate.
+ */
+@layer components {
+  .prose-body {
+    max-width: 68ch;
+  }
+
+  .prose-body h2 {
+    margin-top: 2.75rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+    letter-spacing: -0.011em;
+  }
+
+  .prose-body h3 {
+    margin-top: 2rem;
+    font-size: 1.0625rem;
+    font-weight: 600;
+  }
+
+  .prose-body p,
+  .prose-body li {
+    margin-top: 1rem;
+    color: var(--ui-muted);
+    line-height: 1.75;
+  }
+
+  .prose-body ul,
+  .prose-body ol {
+    margin-top: 0.5rem;
+    padding-left: 1.25rem;
+  }
+
+  .prose-body ul {
+    list-style: disc;
+  }
+
+  .prose-body ol {
+    list-style: decimal;
+  }
+
+  .prose-body li::marker {
+    color: var(--ui-border-strong);
+  }
+
+  .prose-body a {
+    color: var(--ui-accent);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  .prose-body strong {
+    color: var(--ui-text);
+    font-weight: 600;
+  }
+
+  .prose-body code {
+    background-color: var(--ui-surface);
+    border: 1px solid var(--ui-border);
+    border-radius: var(--radius-sm);
+    padding: 0.1rem 0.35rem;
+    font-family: var(--font-mono);
+    font-size: 0.875em;
+  }
+}

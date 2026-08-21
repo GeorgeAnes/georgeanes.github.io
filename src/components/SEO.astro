@@ -1,0 +1,63 @@
+---
+import { SITE_NAME } from '../config/site';
+
+interface Props {
+  title: string;
+  description: string;
+  /** Absolute or site-root-relative path to a social card image. */
+  ogImage?: string;
+  /** `article` for project and blog pages, `website` elsewhere. */
+  ogType?: 'website' | 'article';
+  /** Keep a page out of the index. Set on 404, which should never rank. */
+  noindex?: boolean;
+}
+
+const { title, description, ogImage, ogType = 'website', noindex = false } = Astro.props;
+
+/**
+ * The home page carries the bare name; every other page is scoped by it. This
+ * keeps titles unique per page (a success criterion) without repeating the
+ * site name twice on the one page where it is the whole title.
+ */
+const fullTitle = title === SITE_NAME ? title : `${title} · ${SITE_NAME}`;
+
+// Astro.site is set in astro.config.mjs, so canonicals are absolute.
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImageUrl = ogImage ? new URL(ogImage, Astro.site) : undefined;
+---
+
+<title>{fullTitle}</title>
+<meta name="description" content={description} />
+
+{
+  /* A noindex page gets no canonical: advertising a preferred URL for something
+    that should never rank is contradictory. */
+}
+{
+  noindex ? (
+    <meta name="robots" content="noindex, follow" />
+  ) : (
+    <link rel="canonical" href={canonical} />
+  )
+}
+
+<meta property="og:title" content={fullTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:type" content={ogType} />
+<meta property="og:url" content={canonical} />
+<meta property="og:site_name" content={SITE_NAME} />
+<meta property="og:locale" content="en" />
+
+{
+  /*
+   * og:image is emitted only when a card actually exists. Pointing at a
+   * placeholder would ship a broken URL and quietly fail the link check in J-3.
+   * Default cards land in J-2.
+   */
+}
+{ogImageUrl && <meta property="og:image" content={ogImageUrl} />}
+
+<meta name="twitter:card" content={ogImageUrl ? 'summary_large_image' : 'summary'} />
+<meta name="twitter:title" content={fullTitle} />
+<meta name="twitter:description" content={description} />
+{ogImageUrl && <meta name="twitter:image" content={ogImageUrl} />}

@@ -1,0 +1,61 @@
+---
+import '../styles/global.css';
+import SEO from '../components/SEO.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  ogImage?: string;
+  ogType?: 'website' | 'article';
+  noindex?: boolean;
+}
+
+const { title, description, ogImage, ogType, noindex } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <SEO
+      title={title}
+      description={description}
+      ogImage={ogImage}
+      ogType={ogType}
+      noindex={noindex}
+    />
+  </head>
+
+  <body class="bg-bg text-text flex min-h-[100dvh] flex-col">
+    {
+      /*
+       * First focusable element on the page. Visually hidden until focused,
+       * then pinned top-left rather than shifting layout.
+       */
+    }
+    <a
+      href="#main"
+      class="bg-accent text-on-accent rounded-md focus:ring-text sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:ring-2"
+    >
+      Skip to content
+    </a>
+
+    <SiteHeader />
+
+    {
+      /*
+       * tabindex="-1" lets the skip link move focus here. Without it the jump
+       * moves the viewport but leaves focus stranded at the top of the document.
+       */
+    }
+    <main id="main" tabindex="-1" class="flex-1 focus:outline-none">
+      <slot />
+    </main>
+
+    <SiteFooter />
+  </body>
+</html>

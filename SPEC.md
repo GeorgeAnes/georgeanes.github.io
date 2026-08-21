@@ -64,6 +64,7 @@ Lint:         npm run lint                # eslint . --max-warnings=0
 Format:       npm run format              # prettier --write .
 Unit tests:   npm run test                # vitest run
 Unit (watch): npm run test:watch          # vitest
+Coverage:     npm run test:coverage       # vitest run --coverage
 E2E tests:    npm run test:e2e            # playwright test
 Full gate:    npm run verify              # check && lint && test && build && test:e2e
 ```
@@ -96,6 +97,8 @@ before any commit lands on the default branch.
 │   │   ├── BaseLayout.astro    → <head>, meta, skip link, header, footer
 │   │   └── ProseLayout.astro   → Long-form wrapper for project/post bodies
 │   ├── components/             → ProjectCard, TagList, ContactLinks, SEO, …
+│   ├── config/site.ts          → Site name, URL, published contact details
+│   ├── icons/                  → Empty; astro-icon scans it. Phosphor set is used instead
 │   ├── lib/                    → Pure TS helpers (sorting, formatting) — unit tested
 │   └── styles/global.css       → Tailwind v4 entry + @theme design tokens
 ├── public/                     → Favicon, OG images, static assets

@@ -1,0 +1,77 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+/*
+ * v1 ships this route with zero posts (AC6), and querying an empty collection
+ * makes Astro warn on every render. Checking the directory first keeps the
+ * build output clean while still using the content layer once posts exist.
+ */
+const postFiles = import.meta.glob('../../content/posts/*.{md,mdx}');
+const posts =
+  Object.keys(postFiles).length > 0
+    ? (await getCollection('posts', ({ data }) => data.draft !== true)).sort(
+        (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+      )
+    : [];
+
+const dateFormat = new Intl.DateTimeFormat('en-GB', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+});
+---
+
+<BaseLayout
+  title="Writing"
+  description="Notes on machine learning, control and engineering systems by George Anesiadis."
+>
+  <div class="mx-auto w-full max-w-5xl px-6 py-16">
+    <header class="max-w-[58ch]">
+      <h1 class="text-display font-semibold">Writing</h1>
+      <p class="text-muted mt-5 text-lg">
+        Notes on machine learning, control and the engineering systems they run on.
+      </p>
+    </header>
+
+    {
+      posts.length === 0 ? (
+        <div class="border-border bg-surface rounded-lg mt-14 border p-8">
+          <p class="text-muted max-w-[52ch]">
+            Nothing published yet. Write-ups of the work live under{' '}
+            <a href="/projects/" class="text-accent underline underline-offset-4">
+              projects
+            </a>{' '}
+            in the meantime.
+          </p>
+        </div>
+      ) : (
+        <ul class="divide-border mt-14 divide-y">
+          {posts.map((post) => (
+            <li class="py-6 first:pt-0">
+              <article>
+                <h2 class="text-lg font-semibold">
+                  <a
+                    href={`/blog/${post.id}/`}
+                    class="hover:text-accent transition-colors"
+                  >
+                    {post.data.title}
+                  </a>
+                </h2>
+                <p class="text-muted mt-2 max-w-[62ch] text-sm">
+                  {post.data.description}
+                </p>
+                <time
+                  datetime={post.data.pubDate.toISOString()}
+                  class="text-muted mt-3 block font-mono text-xs"
+                >
+                  {dateFormat.format(post.data.pubDate)}
+                </time>
+              </article>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </div>
+</BaseLayout>
