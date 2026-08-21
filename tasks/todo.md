@@ -34,7 +34,7 @@ Legend: **[G]** = slice gate, do not proceed past it while red.
   - Files: `package.json`, `.prettierrc`, `eslint.config.js`, `vitest.config.ts`,
     `playwright.config.ts`
 
-- [ ] **A-4 · Configure site URL for user-site deployment**
+- [x] **A-4 · Configure site URL for user-site deployment** ✅ 2026-08-21
   - Acceptance: `site: 'https://georgeanes.github.io'`, **no `base`** (user site serves
     at root — see `SPEC.md` → Resolved Decisions 1).
   - Verify: built `dist/` links and canonicals are root-absolute, not `/portfolio/…`.
