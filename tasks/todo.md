@@ -186,7 +186,7 @@ Legend: **[G]** = slice gate, do not proceed past it while red.
   - Files: `src/components/ProjectCard.astro`, `src/pages/projects/index.astro`,
     `src/pages/projects/[...slug].astro`, `src/layouts/ProseLayout.astro`
 
-- [ ] **G-4 · Draft `vfrm-agentic-design-assistant`**
+- [x] **G-4 · Draft `vfrm-agentic-design-assistant`** ✅ 2026-08-21
   - Acceptance: names **ASML** and TU/e course **5ARIP10** explicitly (R1 closed).
     Attribution rules that still hold: describe the collaboration only as the public
     README does, claim **no ASML endorsement**, and state it as **Team 1 work, not
@@ -195,7 +195,7 @@ Legend: **[G]** = slice gate, do not proceed past it while red.
   - Verify: schema passes; wording reviewed against `SPEC.md` → R1.
   - Files: `src/content/projects/vfrm-agentic-design-assistant.md`
 
-- [ ] **G-5 · Draft the remaining 7 projects**
+- [x] **G-5 · Draft the remaining projects** ✅ 2026-08-21 — six, not seven: process-mining landed early in E-1 as the image-pipeline demonstrator.
   - Acceptance: one content file each for `facial-expression-recognition-ml`,
     `process-mining-kpi-dashboard`, `smartphone-activity-recognition`,
     `petri-net-ga-optimization`, `camera-calibration-nerfstudio-pipeline`,
