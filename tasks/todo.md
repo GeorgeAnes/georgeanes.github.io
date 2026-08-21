@@ -105,7 +105,7 @@ Legend: **[G]** = slice gate, do not proceed past it while red.
 
 ## Slice 3 — Design system and shell
 
-- [ ] **C-1 · Design tokens**
+- [x] **C-1 · Design tokens** ✅ 2026-08-21
   - Acceptance: Tailwind v4 `@theme` block defines color, type, and spacing tokens for
     light **and** dark via `prefers-color-scheme`. No manual toggle (out of scope).
     No arbitrary hex in markup thereafter.
