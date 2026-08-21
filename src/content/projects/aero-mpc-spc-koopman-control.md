@@ -7,10 +7,6 @@ summary: >-
 domain: control-robotics
 stack: [MATLAB, YALMIP, MPT3, Koopman Operator, Subspace Methods]
 repoUrl: https://github.com/GeorgeAnes/aero-mpc-spc-koopman-control
-# CONFIRM: all five RMSE pairs are quoted from the README results table
-# (linear MPC 0.1756/0.8767, nonlinear baseline 0.3015/1.5707, improved iMPC
-# 0.1955/0.9340, baseline SPC 0.2394/1.1702, Koopman-SPC 0.2421/1.1385).
-# George to confirm before launch.
 results:
   - Linear MPC tracked best overall, pitch RMSE 0.1756 and yaw RMSE 0.8767
   - Improved iterative nonlinear MPC followed at 0.1955 and 0.9340

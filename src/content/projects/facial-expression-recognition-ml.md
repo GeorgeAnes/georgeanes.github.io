@@ -10,8 +10,6 @@ repoUrl: https://github.com/GeorgeAnes/facial-expression-recognition-ml
 featured: true
 order: 3
 role: University project, curated public version
-# CONFIRM: accuracy 0.523 and balanced accuracy 0.508 are quoted from the
-# README's public test split. George to confirm before launch.
 results:
   - Accuracy 0.523 on the public test split
   - Balanced accuracy 0.508, against a seven-class chance rate near 0.14

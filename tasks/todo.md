@@ -207,7 +207,7 @@ Legend: **[G]** = slice gate, do not proceed past it while red.
   - Files: 7 files in `src/content/projects/`
   - Note: split into 2–3 commits; do not land 7 write-ups in one diff.
 
-- [ ] **G-6 · Metric confirmation pass**
+- [x] **G-6 · Metric confirmation pass** ✅ 2026-08-21 — all four metric sets confirmed true and representative by George; markers cleared; `grep -r CONFIRM src/content/` returns nothing.
   - ⚠️ **Blocks launch.** Batch every `<!-- CONFIRM -->` into one review for George
     rather than interrupting per project (plan risk P2).
   - Acceptance: zero `<!-- CONFIRM -->` markers remain; each number is confirmed true or
@@ -215,8 +215,7 @@ Legend: **[G]** = slice gate, do not proceed past it while red.
   - Verify: `grep -r "CONFIRM" src/content/` returns nothing.
   - Files: `src/content/projects/**`
 
-- [ ] **[G] Gate 5** — content tests green (9 slugs, no empty summaries); all 10 project
-  routes (index + 9 detail) return 200. *(SC 2, SC 3 / AC2, AC4)*
+- [x] **[G] Gate 5** ✅ 2026-08-21 — `npm run verify` exits 0 for the first time since B-1: 17/17 unit tests, 58/58 e2e, astro check and eslint clean. All 9 slugs present with non-empty summaries, index plus 9 detail routes build. *(SC 2, SC 3 / AC2, AC4)*
 
 ---
 

@@ -66,6 +66,10 @@ sourced from ANSYS sweeps.
 
 This was team work for TU/e course 5ARIP10, carried out by Team 1 in
 collaboration with ASML. It is not an ASML product and carries no endorsement
-from ASML. The Kriging surrogate models the agent calls were supplied to the
-team rather than trained as part of this work; the contribution here is the
-agent, its graph, and the optimization and review workflow around those models.
+from ASML.
+
+The SMT/Kriging surrogate models the agent calls were pre-trained by a
+teammate and integrated into this work, not trained as part of it. The
+contribution here is the agent itself: its graph, the problem formulation, the
+optimization and clustering workflow, and the human review steps around those
+models.

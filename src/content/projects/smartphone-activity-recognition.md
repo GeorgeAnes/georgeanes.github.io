@@ -7,9 +7,6 @@ summary: >-
 domain: ai-ml
 stack: [Python, NumPy, pandas, scikit-learn, Signal Processing]
 repoUrl: https://github.com/GeorgeAnes/smartphone-activity-recognition
-# CONFIRM: balanced accuracy 0.962 (stratified holdout) and 0.628 mean
-# (leave-one-participant-out), both random forest, quoted from the README
-# benchmark table. George to confirm before launch.
 results:
   - Balanced accuracy 0.962 on a stratified holdout, random forest
   - Balanced accuracy 0.628 mean under leave-one-participant-out validation
