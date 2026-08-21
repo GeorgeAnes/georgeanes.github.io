@@ -1,0 +1,9 @@
+dist/
+.astro/
+node_modules/
+package-lock.json
+my-repos.json
+
+# Spec and planning documents are hand-formatted for readability.
+# Prettier reflows prose and widens tables, which is churn, not improvement.
+*.md

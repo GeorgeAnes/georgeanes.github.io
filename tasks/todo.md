@@ -26,7 +26,7 @@ Legend: **[G]** = slice gate, do not proceed past it while red.
   - Verify: a throwaway collection + a `@theme` token both work in `dev`.
   - Files: `tasks/notes-astro7.md`
 
-- [ ] **A-3 · Wire toolchain and the `verify` script**
+- [x] **A-3 · Wire toolchain and the `verify` script** ✅ 2026-08-21
   - Acceptance: prettier + `prettier-plugin-astro`, eslint (`--max-warnings=0`), vitest,
     playwright + `@axe-core/playwright` installed; all 10 scripts from `SPEC.md` →
     Commands exist and run.
