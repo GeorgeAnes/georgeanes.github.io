@@ -1,6 +1,17 @@
 @import 'tailwindcss';
 
 /*
+ * Self-hosted, bundled by Vite. No external requests, so nothing depends on a
+ * third-party font host being up or on what it logs. Each @font-face carries a
+ * unicode-range, so a browser downloads only the latin subset (~29 KB per
+ * family) and never fetches the cyrillic, greek or vietnamese cuts.
+ * Italic is deliberately not imported: emphasis uses weight, and skipping it
+ * keeps another 31 KB per family off the wire.
+ */
+@import '@fontsource-variable/geist/wght.css';
+@import '@fontsource-variable/geist-mono/wght.css';
+
+/*
  * Design tokens. See tasks/design-direction.md for the reasoning behind the
  * palette, the dials (variance 7, motion 4, density 4), and the bans.
  *
@@ -63,13 +74,14 @@
   --color-accent: var(--ui-accent);
   --color-on-accent: var(--ui-on-accent);
 
-  /* TODO(C-1): the display and mono faces are pending a dependency decision.
-     The stacks below are the fallback chain those faces will sit in front of. */
+  /* Geist for display and body, Geist Mono for metadata, stack labels and
+     figure captions. Mono is honest here: the content is genuinely technical. */
   --font-display:
-    ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
-    sans-serif;
+    'Geist Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
   --font-mono:
-    ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, monospace;
+    'Geist Mono Variable', ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo,
+    Consolas, monospace;
 
   /* Display sizes are deliberately restrained. Hierarchy comes from weight,
      colour and space, not from raw scale. */
