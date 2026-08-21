@@ -149,3 +149,73 @@
     scroll-behavior: auto !important;
   }
 }
+
+/*
+ * Long-form body copy for project and post content. Written as one component
+ * class rather than a pile of arbitrary variants on the wrapper, so headings,
+ * lists, links and code all get styled and nothing silently falls through when
+ * a write-up uses an element the wrapper did not anticipate.
+ */
+@layer components {
+  .prose-body {
+    max-width: 68ch;
+  }
+
+  .prose-body h2 {
+    margin-top: 2.75rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+    letter-spacing: -0.011em;
+  }
+
+  .prose-body h3 {
+    margin-top: 2rem;
+    font-size: 1.0625rem;
+    font-weight: 600;
+  }
+
+  .prose-body p,
+  .prose-body li {
+    margin-top: 1rem;
+    color: var(--ui-muted);
+    line-height: 1.75;
+  }
+
+  .prose-body ul,
+  .prose-body ol {
+    margin-top: 0.5rem;
+    padding-left: 1.25rem;
+  }
+
+  .prose-body ul {
+    list-style: disc;
+  }
+
+  .prose-body ol {
+    list-style: decimal;
+  }
+
+  .prose-body li::marker {
+    color: var(--ui-border-strong);
+  }
+
+  .prose-body a {
+    color: var(--ui-accent);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  .prose-body strong {
+    color: var(--ui-text);
+    font-weight: 600;
+  }
+
+  .prose-body code {
+    background-color: var(--ui-surface);
+    border: 1px solid var(--ui-border);
+    border-radius: var(--radius-sm);
+    padding: 0.1rem 0.35rem;
+    font-family: var(--font-mono);
+    font-size: 0.875em;
+  }
+}

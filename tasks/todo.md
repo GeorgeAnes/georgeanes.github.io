@@ -164,7 +164,7 @@ Legend: **[G]** = slice gate, do not proceed past it while red.
 
 ## Slice 5 — Project catalog ← the slice that matters
 
-- [ ] **G-1 · Draft `enterprise-ai-document-risk-auditor` (hardest first)**
+- [x] **G-1 · Draft `enterprise-ai-document-risk-auditor` (hardest first)** ✅ 2026-08-21
   - Why first: 312-line README, most architecture — exposes schema gaps while only one
     file needs revising (approved decision 3).
   - Acceptance: full content file — problem, approach, results, stack, repoUrl. Every
@@ -172,13 +172,13 @@ Legend: **[G]** = slice gate, do not proceed past it while red.
   - Verify: parses against the schema; B-1 drops from 9 missing slugs to 8.
   - Files: `src/content/projects/enterprise-ai-document-risk-auditor.md`
 
-- [ ] **G-2 · Schema revision pass**
+- [x] **G-2 · Schema revision pass** ✅ 2026-08-21 — no changes required; `results` and `role` both proved correctly optional and the figures cap held. Recorded rather than skipped.
   - Acceptance: any field G-1 revealed as missing/wrong is fixed in `content.config.ts`
     **before** the remaining 8 are written.
   - Verify: `astro check` + `npm test` clean.
   - Files: `src/content.config.ts`, `tests/content.test.ts`
 
-- [ ] **G-3 · ProjectCard, project index, detail route**
+- [x] **G-3 · ProjectCard, project index, detail route** ✅ 2026-08-21
   - Acceptance: `/projects/` lists all entries via `sortProjects()` (AC3);
     `/projects/[...slug]` renders body through `ProseLayout` with stack, repo link, and
     images (AC4).

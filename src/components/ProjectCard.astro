@@ -1,0 +1,67 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { Picture } from 'astro:assets';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+  /** `lead` is the single large card; `standard` fills the rest of the grid. */
+  size?: 'lead' | 'standard';
+}
+
+const { project, size = 'standard' } = Astro.props;
+const { title, summary, stack, heroImage, heroImageAlt } = project.data;
+
+const isLead = size === 'lead';
+// Three tags is enough to signal the domain; more turns the card into a list.
+const shownStack = stack.slice(0, 3);
+---
+
+<article
+  class:list={[
+    'group border-border bg-surface rounded-lg relative flex flex-col overflow-hidden border transition-colors',
+    'hover:border-accent focus-within:border-accent',
+  ]}
+  style="transition-duration: var(--duration-base); transition-timing-function: var(--ease-out-quint)"
+>
+  {
+    heroImage && heroImageAlt && (
+      <div class="border-border overflow-hidden border-b">
+        <Picture
+          src={heroImage}
+          alt={heroImageAlt}
+          formats={['avif', 'webp']}
+          widths={isLead ? [480, 768, 1024] : [360, 640]}
+          sizes={
+            isLead
+              ? '(min-width: 1024px) 640px, 100vw'
+              : '(min-width: 1024px) 380px, 100vw'
+          }
+          class="h-full w-full object-cover"
+        />
+      </div>
+    )
+  }
+
+  <div class:list={['flex flex-1 flex-col', isLead ? 'p-7' : 'p-6']}>
+    <h3 class:list={[isLead ? 'text-title' : 'text-lg', 'font-semibold']}>
+      {/* Stretched link: the whole card is the target, but only one tab stop. */}
+      <a href={`/projects/${project.id}/`} class="after:absolute after:inset-0">
+        {title}
+      </a>
+    </h3>
+
+    <p class:list={['text-muted mt-3 flex-1', isLead ? 'max-w-[52ch]' : 'text-sm']}>
+      {summary}
+    </p>
+
+    <ul class="mt-5 flex flex-wrap gap-2">
+      {
+        shownStack.map((item) => (
+          <li class="border-border text-muted rounded-sm border px-2 py-1 font-mono text-xs">
+            {item}
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</article>
