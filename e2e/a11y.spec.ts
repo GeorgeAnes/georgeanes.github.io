@@ -6,6 +6,7 @@ const PAGES = [
   { name: 'not found', path: '/404' },
   { name: 'projects index', path: '/projects/' },
   { name: 'project detail', path: '/projects/process-mining-kpi-dashboard' },
+  { name: 'blog index', path: '/blog/' },
 ];
 
 for (const { name, path } of PAGES) {

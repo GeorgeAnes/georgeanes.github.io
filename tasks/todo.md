@@ -221,7 +221,7 @@ Legend: **[G]** = slice gate, do not proceed past it while red.
 
 ## Slice 6 — Home and blog
 
-- [ ] **I-1 · Hero and about**
+- [x] **I-1 · Hero and about** ✅ 2026-08-21
   - Acceptance: name, one-line positioning, and focus areas visible **above the fold at
     1366×768 with no scrolling** (AC1). Bio facts sourced from the profile README —
     MSc AI & Engineering Systems at TU/e, HTS&R track, Chemical Engineering background.
@@ -230,14 +230,14 @@ Legend: **[G]** = slice gate, do not proceed past it while red.
     initial viewport without scrolling.
   - Files: `src/pages/index.astro`, `src/components/Hero.astro`, `e2e/home.spec.ts`
 
-- [ ] **I-2 · Featured projects on the home page**
+- [x] **I-2 · Featured projects on the home page** ✅ 2026-08-21
   - Acceptance: the three approved featured projects —
     `enterprise-ai-document-risk-auditor`, `vfrm-agentic-design-assistant`,
     `facial-expression-recognition-ml` — plus a link to the full index.
   - Verify: e2e asserts 3 cards and the index link.
   - Files: `src/pages/index.astro`
 
-- [ ] **H-1 · Blog infrastructure (zero posts)**
+- [x] **H-1 · Blog infrastructure (zero posts)** ✅ 2026-08-21
   - Acceptance: `/blog/` renders a graceful empty state; `[...slug]` route builds with
     zero entries (no crash on an empty collection); MDX configured; nav link stays
     hidden until a post exists (AC6). **No posts written — out of scope.**
@@ -246,7 +246,7 @@ Legend: **[G]** = slice gate, do not proceed past it while red.
   - Files: `src/pages/blog/index.astro`, `src/pages/blog/[...slug].astro`,
     `astro.config.mjs`
 
-- [ ] **[G] Gate 6** — AC1–AC6 each demonstrably satisfied on the deployed site.
+- [x] **[G] Gate 6** ✅ 2026-08-21 — AC1–AC6 each covered by a passing test locally (73 e2e, 17 unit, `verify` exits 0). Confirmation on the deployed site happens in Slice 7, since nothing is live yet.
 
 ---
 

@@ -5,18 +5,32 @@ import { test, expect } from '@playwright/test';
  * Extend PAGES as new page types land (projects index in G-3, project detail
  * in G-3, blog in H-1).
  */
-const PAGES = ['/', '/404', '/projects/', '/projects/process-mining-kpi-dashboard'];
+const PAGES = [
+  '/',
+  '/404',
+  '/projects/',
+  '/projects/process-mining-kpi-dashboard',
+  '/blog/',
+];
 
 for (const path of PAGES) {
   test(`${path} exposes email and GitHub`, async ({ page }) => {
     await page.goto(path);
 
+    /*
+     * Asserted on the footer, which is the site-wide guarantee behind AC5.
+     * A page may legitimately repeat the address elsewhere, as the home page
+     * does in its contact section, so the page-level count is not fixed at one.
+     */
     await expect(
-      page.locator('a[href="mailto:giwrgosanesiadis4@gmail.com"]'),
+      page.locator('footer a[href="mailto:giwrgosanesiadis4@gmail.com"]'),
     ).toHaveCount(1);
     await expect(
       page.locator('footer a[href="https://github.com/GeorgeAnes"]'),
     ).toHaveCount(1);
+    await expect(
+      page.locator('a[href="mailto:giwrgosanesiadis4@gmail.com"]'),
+    ).not.toHaveCount(0);
   });
 
   test(`${path} does not publish a LinkedIn link`, async ({ page }) => {

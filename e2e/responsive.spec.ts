@@ -2,7 +2,13 @@ import { test, expect } from '@playwright/test';
 
 const WIDTHS = [320, 768, 1440];
 const SCHEMES = ['light', 'dark'] as const;
-const PAGES = ['/', '/404', '/projects/', '/projects/process-mining-kpi-dashboard'];
+const PAGES = [
+  '/',
+  '/404',
+  '/projects/',
+  '/projects/process-mining-kpi-dashboard',
+  '/blog/',
+];
 
 /**
  * SPEC.md success criterion 8: no horizontal scroll at any of these widths, in
