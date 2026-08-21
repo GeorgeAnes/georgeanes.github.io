@@ -1,0 +1,3 @@
+# Content files land here in slice 5 (tasks G-1, G-4, G-5).
+# Keeps the directory tracked so tests/content.test.ts reports missing
+# slugs rather than a missing directory.

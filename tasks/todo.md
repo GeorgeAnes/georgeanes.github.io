@@ -68,7 +68,7 @@ Legend: **[G]** = slice gate, do not proceed past it while red.
 
 ## Slice 2 — Content contract
 
-- [ ] **B-1 · Write the failing content test first (TDD)**
+- [x] **B-1 · Write the failing content test first (TDD)** ✅ 2026-08-21
   - Acceptance: `tests/content.test.ts` asserts exactly the 9 project slugs
     (`aero-mpc-spc-koopman-control`, `camera-calibration-nerfstudio-pipeline`,
     `enterprise-ai-document-risk-auditor`, `facial-expression-recognition-ml`,
