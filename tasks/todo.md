@@ -10,13 +10,13 @@ Legend: **[G]** = slice gate, do not proceed past it while red.
 
 ## Slice 1 — Walking skeleton
 
-- [ ] **A-1 · Scaffold Astro 7 project**
+- [x] **A-1 · Scaffold Astro 7 project** ✅ 2026-08-21 (`0343c73`)
   - Acceptance: `npm create astro@latest` (minimal, TypeScript strict) produces a
     building project; Node pinned to 24 in `.nvmrc` and `package.json` `engines`.
   - Verify: `npm run build` exits 0; `npm run dev` serves a page.
   - Files: `package.json`, `astro.config.mjs`, `tsconfig.json`, `.nvmrc`, `.gitignore`
 
-- [ ] **A-2 · Verify Astro 7 / Tailwind 4 APIs against official docs**
+- [x] **A-2 · Verify Astro 7 / Tailwind 4 APIs against official docs** ✅ 2026-08-21
   - Why: plan risks P3 and P4 — my knowledge predates 7.2.4, and Tailwind v4 dropped
     `tailwind.config.js` for CSS-first `@theme`. Guessing here silently no-ops.
   - Acceptance: written notes confirming the Content Layer `defineCollection`/`glob()`
@@ -84,6 +84,9 @@ Legend: **[G]** = slice gate, do not proceed past it while red.
     `featured?`, `order?`, `role?`, `results?`, `heroImage?`) and `posts`
     (`title`, `description`, `pubDate`, `draft?`). `summary` required and non-empty;
     `results` optional so a project can ship on its summary alone (plan risk P2).
+    **Per A-2:** import `z` from `astro/zod` and `glob` from `astro/loaders`; the
+    `projects` schema must use the function form `({ image }) => z.object({…})` so
+    `heroImage` can be validated by the `image()` helper.
   - Verify: `astro check` clean; one hand-made fixture entry passes B-1's schema
     assertions.
   - Files: `src/content.config.ts`
@@ -140,9 +143,11 @@ Legend: **[G]** = slice gate, do not proceed past it while red.
   - Why first: plan risk **P1** — 46 raw MATLAB/matplotlib PNGs would miss LCP < 2.0 s.
     Establish the pattern once, before 9 pages depend on it.
   - Acceptance: per-project assets live at `src/assets/projects/<slug>/`; Astro
-    `<Image />` with explicit `width`/`height` (CLS), AVIF/WebP output, `loading="lazy"`
-    below the fold, `eager` + `fetchpriority="high"` for any LCP image; every image has
-    a real `alt`.
+    `<Image />` from `astro:assets` with explicit `width`/`height` (CLS), AVIF/WebP
+    output, and a real `alt` on every image. **Per A-2:** use the **`priority` prop**
+    for the LCP image — it applies `loading="eager"`, `decoding="sync"`, and
+    `fetchpriority="high"` together. Below-the-fold images need nothing: `loading`
+    already defaults to `lazy` and `decoding` to `async`.
   - Verify: one project page renders 3 optimized images; no CLS on reload.
   - Files: `src/components/ProjectImage.astro`, `src/assets/projects/…`
 
