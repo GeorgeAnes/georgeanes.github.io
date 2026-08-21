@@ -1,6 +1,7 @@
 # Spec: George Anesiadis — Personal Portfolio Site
 
-Status: **Approved 2026-08-20 — Phase 1 gate passed. Plan in `tasks/plan.md`.**
+Status: **Shipped 2026-08-21. Live at https://georgeanes.github.io/**
+Verification: `tasks/lighthouse-report.md`. Plan in `tasks/plan.md`.
 Last updated: 2026-08-20
 
 ## Objective
@@ -273,11 +274,9 @@ Open items that do not block the plan but must be closed before launch.
   attribute team work as team work (`vfrm-agentic-design-assistant` was TU/e 5ARIP10
   Team 1, not solo). The *Ask first* boundary still governs any **new** third-party
   name not already public in a repo README.
-- **R2 — Unpublished work.** The profile README lists an *RL quadcopter landing on a
-  moving platform* project with no public repo. It cannot be a linked project entry.
-  Options: omit, or list it under a non-linked "other work" line. **Default: omit from
-  v1.**
-- **R3 — Image licensing/consent.** `facial-expression-recognition-ml` involves facial
-  images. Any face shown on the site must be George's own or a licensed/synthetic
-  sample — **no third-party faces from a research dataset**. Verify before using its
-  figures.
+- **R2 — CLOSED 2026-08-21.** The *RL quadcopter landing* project is omitted from v1,
+  as agreed. Nothing on the site references it, so no unlinkable claim ships.
+- **R3 — CLOSED 2026-08-21.** No face imagery ships. The three figures used from
+  `facial-expression-recognition-ml` are a pipeline block diagram, a model-comparison
+  chart and a confusion matrix. The only figure that could plausibly have contained a
+  face was opened and checked; it does not. No consent question arises.
