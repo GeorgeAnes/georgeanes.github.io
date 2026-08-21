@@ -31,6 +31,15 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      # A cold build regenerates ~166 AVIF and WebP variants, which takes
+      # minutes. Keyed on the source images so it invalidates when they change.
+      - name: Restore image transform cache
+        uses: actions/cache@v4
+        with:
+          path: .astro-cache
+          key: astro-cache-${{ runner.os }}-${{ hashFiles('src/assets/**') }}
+          restore-keys: astro-cache-${{ runner.os }}-
+
       - name: Build
         run: npm run build
 

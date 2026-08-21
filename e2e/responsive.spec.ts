@@ -38,3 +38,23 @@ for (const path of PAGES) {
     }
   }
 }
+
+/**
+ * SPEC.md -> Always do: the site must stay fully functional with JavaScript
+ * disabled. It ships zero client JS, so this should hold trivially, and the
+ * test exists to catch the day someone adds an island that breaks it.
+ */
+test.describe('without JavaScript', () => {
+  test.use({ javaScriptEnabled: false });
+
+  for (const path of PAGES) {
+    test(`${path} still renders and navigates`, async ({ page }) => {
+      const response = await page.goto(path);
+      expect(response?.status()).toBe(200);
+
+      await expect(page.locator('h1')).toHaveCount(1);
+      await expect(page.locator('nav[aria-label="Primary"] a').first()).toBeVisible();
+      await expect(page.locator('footer a[href^="mailto:"]')).toHaveCount(1);
+    });
+  }
+});
