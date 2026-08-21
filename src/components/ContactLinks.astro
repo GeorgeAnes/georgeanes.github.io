@@ -1,0 +1,55 @@
+---
+import { Icon } from 'astro-icon/components';
+import { CONTACT_EMAIL, GITHUB_URL } from '../config/site';
+
+interface Props {
+  /** `inline` for the footer row, `stacked` for a contact block. */
+  layout?: 'inline' | 'stacked';
+}
+
+const { layout = 'inline' } = Astro.props;
+
+/**
+ * The only two channels published in v1. LinkedIn is deliberately absent
+ * (SPEC.md -> Resolved Decisions 2); it is a one-line addition when wanted.
+ */
+const links = [
+  {
+    label: CONTACT_EMAIL,
+    href: `mailto:${CONTACT_EMAIL}`,
+    icon: 'ph:envelope-simple',
+    describe: 'Email George Anesiadis',
+  },
+  {
+    label: GITHUB_URL.replace('https://', ''),
+    href: GITHUB_URL,
+    icon: 'ph:github-logo',
+    describe: 'George Anesiadis on GitHub',
+  },
+];
+---
+
+<ul
+  class:list={[
+    'flex gap-x-6 gap-y-2',
+    layout === 'inline' ? 'flex-wrap items-center' : 'flex-col items-start',
+  ]}
+>
+  {
+    links.map((link) => (
+      <li>
+        <a
+          href={link.href}
+          rel="noopener"
+          aria-label={link.describe}
+          class="text-muted hover:text-accent group inline-flex items-center gap-2 font-mono text-sm transition-colors"
+          style="transition-duration: var(--duration-fast); transition-timing-function: var(--ease-out-quint)"
+        >
+          {/* Decorative: the link text already names the destination. */}
+          <Icon name={link.icon} class="size-4 shrink-0" aria-hidden="true" />
+          <span class="underline-offset-4 group-hover:underline">{link.label}</span>
+        </a>
+      </li>
+    ))
+  }
+</ul>

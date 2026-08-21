@@ -1,0 +1,23 @@
+---
+import ContactLinks from './ContactLinks.astro';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="border-border mt-24 border-t">
+  <div
+    class="mx-auto flex w-full max-w-5xl flex-col gap-6 px-6 py-10 sm:flex-row sm:items-end sm:justify-between"
+  >
+    <div>
+      <p class="font-semibold tracking-tight">George Anesiadis</p>
+      <p class="text-muted mt-1 max-w-[42ch] text-sm">
+        AI and engineering systems. Control, robotics, optimization and machine learning.
+      </p>
+    </div>
+
+    <div class="sm:text-right">
+      <ContactLinks layout="stacked" />
+      <p class="text-muted mt-6 font-mono text-xs">© {year} George Anesiadis</p>
+    </div>
+  </div>
+</footer>

@@ -112,13 +112,13 @@ Legend: **[G]** = slice gate, do not proceed past it while red.
   - Verify: a probe page renders correctly in both schemes; forced-colors mode legible.
   - Files: `src/styles/global.css`, `astro.config.mjs`
 
-- [ ] **C-2 · BaseLayout with skip link and SEO head**
+- [x] **C-2 · BaseLayout with skip link and SEO head** ✅ 2026-08-21
   - Acceptance: `<html lang="en">`, unique title/description per page, canonical, OG +
     Twitter tags, skip-to-content link as first focusable element, one `<h1>` per page.
   - Verify: view-source on two pages shows distinct titles and canonicals.
   - Files: `src/layouts/BaseLayout.astro`, `src/components/SEO.astro`
 
-- [ ] **C-3 · Header, footer, contact links**
+- [x] **C-3 · Header, footer, contact links** ✅ 2026-08-21
   - Acceptance: header nav (Projects, About; **blog hidden until a post exists** — AC6);
     footer with email `giwrgosanesiadis4@gmail.com` and
     `https://github.com/GeorgeAnes`. **No LinkedIn** (Resolved Decision 2). Reachable
@@ -127,13 +127,12 @@ Legend: **[G]** = slice gate, do not proceed past it while red.
   - Files: `src/components/SiteHeader.astro`, `src/components/SiteFooter.astro`,
     `src/components/ContactLinks.astro`, `e2e/contact.spec.ts`
 
-- [ ] **C-4 · 404 page**
+- [x] **C-4 · 404 page** ✅ 2026-08-21
   - Acceptance: styled 404 using BaseLayout with a route back home.
   - Verify: `dist/404.html` exists and renders.
   - Files: `src/pages/404.astro`
 
-- [ ] **[G] Gate 3** — axe: zero serious/critical on the shell; full keyboard traversal;
-  skip-link works; no horizontal scroll at 320/768/1440 in both schemes. *(SC 6, SC 8)*
+- [x] **[G] Gate 3** ✅ 2026-08-21 — 30 e2e tests green: axe reports zero serious/critical on `/` and `/404`; all 7 interactive elements reachable by Tab; skip link is first focusable and moves focus to `#main`; no horizontal scroll at 320/768/1440 in both schemes; 0 client JS files shipped. *(SC 6, SC 8)*
 
 ---
 

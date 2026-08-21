@@ -1,0 +1,26 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Page not found"
+  description="That page does not exist. Head back to the portfolio index."
+  noindex
+>
+  <section class="mx-auto w-full max-w-5xl px-6 py-24">
+    <p class="text-muted font-mono text-sm">404</p>
+    <h1 class="text-title mt-3 font-semibold">That page does not exist</h1>
+    <p class="text-muted mt-4 max-w-[55ch]">
+      The link may be out of date, or the page may have moved.
+    </p>
+    <p class="mt-8">
+      <a
+        href="/"
+        class="border-border-strong hover:border-accent hover:text-accent rounded-md inline-block border px-4 py-2 text-sm transition-colors"
+        style="transition-duration: var(--duration-fast); transition-timing-function: var(--ease-out-quint)"
+      >
+        Back to the home page
+      </a>
+    </p>
+  </section>
+</BaseLayout>

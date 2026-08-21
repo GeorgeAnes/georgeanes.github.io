@@ -1,26 +1,27 @@
 ---
-import '../styles/global.css';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE_NAME, GITHUB_URL } from '../config/site';
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>George Anesiadis</title>
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-  </head>
-  <body class="bg-bg text-text">
-    <main class="mx-auto max-w-2xl px-6 py-24">
-      <h1 class="text-display font-semibold">George Anesiadis</h1>
-      <p data-probe="muted" class="text-muted mt-3">
-        Portfolio site, under construction.
-      </p>
+<BaseLayout
+  title={SITE_NAME}
+  description="MSc Artificial Intelligence and Engineering Systems student at TU/e, building AI systems for engineering: control, robotics, optimization, computer vision and industrial data science."
+>
+  <section class="mx-auto w-full max-w-5xl px-6 py-24">
+    <h1 class="text-display font-semibold">George Anesiadis</h1>
+    <p data-probe="muted" class="text-muted mt-4 max-w-[55ch] text-lg">
+      AI and engineering systems. Nine projects across control, robotics, optimization and
+      machine learning are being written up here.
+    </p>
+    <p class="mt-8">
       <a
-        href="#probe"
         data-probe="accent"
-        class="text-accent border-border-strong rounded-md mt-6 inline-block border px-4 py-2"
-        >Probe link</a
+        href={GITHUB_URL}
+        rel="noopener"
+        class="text-accent font-mono text-sm underline underline-offset-4"
       >
-    </main>
-  </body>
-</html>
+        {GITHUB_URL.replace('https://', '')}
+      </a>
+    </p>
+  </section>
+</BaseLayout>
