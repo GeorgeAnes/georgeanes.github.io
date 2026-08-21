@@ -4,6 +4,7 @@ import AxeBuilder from '@axe-core/playwright';
 const PAGES = [
   { name: 'home', path: '/' },
   { name: 'not found', path: '/404' },
+  { name: 'project detail', path: '/projects/process-mining-kpi-dashboard' },
 ];
 
 for (const { name, path } of PAGES) {

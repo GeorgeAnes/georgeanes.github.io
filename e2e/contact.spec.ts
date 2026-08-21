@@ -5,7 +5,7 @@ import { test, expect } from '@playwright/test';
  * Extend PAGES as new page types land (projects index in G-3, project detail
  * in G-3, blog in H-1).
  */
-const PAGES = ['/', '/404'];
+const PAGES = ['/', '/404', '/projects/process-mining-kpi-dashboard'];
 
 for (const path of PAGES) {
   test(`${path} exposes email and GitHub`, async ({ page }) => {

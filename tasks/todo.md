@@ -138,7 +138,7 @@ Legend: **[G]** = slice gate, do not proceed past it while red.
 
 ## Slice 4 — Image pipeline
 
-- [ ] **E-1 · Asset convention and one optimized project page**
+- [x] **E-1 · Asset convention and one optimized project page** ✅ 2026-08-21
   - Why first: plan risk **P1** — 46 raw MATLAB/matplotlib PNGs would miss LCP < 2.0 s.
     Establish the pattern once, before 9 pages depend on it.
   - Acceptance: per-project assets live at `src/assets/projects/<slug>/`; Astro
@@ -150,7 +150,7 @@ Legend: **[G]** = slice gate, do not proceed past it while red.
   - Verify: one project page renders 3 optimized images; no CLS on reload.
   - Files: `src/components/ProjectImage.astro`, `src/assets/projects/…`
 
-- [ ] **E-2 · Curate images to budget**
+- [x] **E-2 · Curate images to budget** ✅ 2026-08-21
   - Acceptance: **≤ 3 images per project** (approved hard constraint); hero image
     ≤ 150 KB after conversion. Prefer figures that show a *result* over decorative
     screenshots. **R3:** no third-party faces from a research dataset in
@@ -158,8 +158,7 @@ Legend: **[G]** = slice gate, do not proceed past it while red.
   - Verify: `find src/assets -size +150k` returns nothing; per-project count ≤ 3.
   - Files: `src/assets/projects/**`
 
-- [ ] **[G] Gate 4** — measured on the **deployed** page: LCP < 2.0 s, CLS < 0.05,
-  JS < 20 KB gzipped. *(SC 5)*
+- [~] **[G] Gate 4** — PARTIAL 2026-08-21. Measured locally: CLS < 0.05 and JS < 20 KB both green in `e2e/performance.spec.ts`; every image carries intrinsic dimensions; no raw PNG or JPEG is served; exactly one image opts out of lazy loading. **LCP is not yet measured**: the branch is held back from `main` per the single-PR decision, so there is nothing deployed to measure against. J-4 closes it on the live site, which is the criterion of record. *(SC 5)*
 
 ---
 

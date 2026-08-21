@@ -44,6 +44,23 @@ const projects = defineCollection({
         results: z.array(z.string().min(1)).optional(),
         heroImage: image().optional(),
         heroImageAlt: z.string().min(1).optional(),
+        /**
+         * Supporting figures. Capped at two so that hero plus figures never
+         * exceeds the approved three-images-per-project budget. The cap lives
+         * here rather than in a review checklist so the build enforces it.
+         * Alt text is required on every one: these carry results, so none of
+         * them is decorative.
+         */
+        figures: z
+          .array(
+            z.object({
+              src: image(),
+              alt: z.string().min(1),
+              caption: z.string().min(1).optional(),
+            }),
+          )
+          .max(2)
+          .optional(),
       })
       .refine((data) => data.heroImage === undefined || data.heroImageAlt !== undefined, {
         message: 'heroImageAlt is required whenever heroImage is set',

@@ -22,4 +22,15 @@ export default tseslint.config(
       globals: { ...globals.browser, ...globals.node },
     },
   },
+  {
+    /*
+     * `no-undef` cannot see TypeScript's type namespace, so ambient types like
+     * Astro's `ImageMetadata` register as undefined identifiers. TypeScript
+     * already rejects genuinely undefined names, and `astro check` runs in the
+     * same gate, so the rule is redundant here and only produces false
+     * positives. This is typescript-eslint's own recommendation.
+     */
+    files: ['**/*.ts', '**/*.tsx', '**/*.astro'],
+    rules: { 'no-undef': 'off' },
+  },
 );

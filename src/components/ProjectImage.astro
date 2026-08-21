@@ -1,0 +1,50 @@
+---
+import { Picture } from 'astro:assets';
+
+interface Props {
+  /** Imported image, so Astro knows the intrinsic dimensions at build time. */
+  src: ImageMetadata;
+  /** Describes what the figure shows. Never decorative: these carry results. */
+  alt: string;
+  /** Optional short caption rendered under the figure. */
+  caption?: string;
+  /**
+   * Set on the one image most likely to be the LCP element. Astro's `priority`
+   * applies loading="eager", decoding="sync" and fetchpriority="high" together
+   * (verified in A-2). Everything else stays lazy by default.
+   */
+  priority?: boolean;
+}
+
+const { src, alt, caption, priority = false } = Astro.props;
+---
+
+<figure class="my-8">
+  <div class="border-border bg-surface rounded-lg overflow-hidden border">
+    {
+      /*
+       * Width and height come from the imported metadata, so the box is
+       * reserved before the bytes arrive and the figure contributes no CLS.
+       * AVIF first, WebP as the fallback the browser will actually take if
+       * AVIF is unsupported.
+       */
+    }
+    <Picture
+      src={src}
+      alt={alt}
+      formats={['avif', 'webp']}
+      widths={[480, 768, 1024]}
+      sizes="(min-width: 1024px) 960px, 100vw"
+      priority={priority}
+      class="h-auto w-full"
+    />
+  </div>
+
+  {
+    caption && (
+      <figcaption class="text-muted mt-3 font-mono text-xs leading-relaxed">
+        {caption}
+      </figcaption>
+    )
+  }
+</figure>
