@@ -32,7 +32,12 @@ const dateFormat = new Intl.DateTimeFormat('en-GB', {
 });
 ---
 
-<BaseLayout title={post.data.title} description={post.data.description} ogType="article">
+<BaseLayout
+  title={post.data.title}
+  description={post.data.description}
+  ogType="article"
+  ogImage="/og/blog.png"
+>
   <article class="mx-auto w-full max-w-5xl px-6 py-16">
     <header class="max-w-[68ch]">
       <h1 class="text-title font-semibold">{post.data.title}</h1>

@@ -3,6 +3,9 @@ dist/
 # generated types
 .astro/
 
+# astro build cache (image transforms)
+.astro-cache/
+
 # dependencies
 node_modules/
 

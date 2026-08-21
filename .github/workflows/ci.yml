@@ -28,11 +28,34 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      # A cold build regenerates ~166 AVIF and WebP variants, which takes
+      # minutes. Keyed on the source images so it invalidates when they change.
+      - name: Restore image transform cache
+        uses: actions/cache@v4
+        with:
+          path: .astro-cache
+          key: astro-cache-${{ runner.os }}-${{ hashFiles('src/assets/**') }}
+          restore-keys: astro-cache-${{ runner.os }}-
+
       - name: Install Playwright browser
         run: npx playwright install --with-deps chromium
 
       - name: Run the full gate
         run: npm run verify
+
+      # Runs against the built output, so it checks the links a visitor would
+      # actually follow rather than the ones written in source.
+      - name: Check links
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: >-
+            --no-progress
+            --max-concurrency 4
+            --accept 200,206,429
+            --exclude-mail
+            --exclude-path dist/og
+            'dist/**/*.html'
+          fail: true
 
       - name: Upload Playwright report on failure
         if: failure()
