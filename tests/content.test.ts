@@ -86,13 +86,16 @@ describe('project content collection', () => {
 
   it('gives every project a non-empty summary', () => {
     const offenders = entries
-      .filter(({ data }) => typeof data.summary !== 'string' || data.summary.trim() === '')
+      .filter(
+        ({ data }) => typeof data.summary !== 'string' || data.summary.trim() === '',
+      )
       .map(({ slug }) => slug);
 
     expect(
       offenders,
       `These projects have a missing or empty summary. AC2 exists precisely because ` +
-        `the GitHub descriptions are empty:\n` + offenders.map((s) => `  - ${s}`).join('\n'),
+        `the GitHub descriptions are empty:\n` +
+        offenders.map((s) => `  - ${s}`).join('\n'),
     ).toEqual([]);
   });
 
@@ -101,9 +104,10 @@ describe('project content collection', () => {
       .filter(({ data }) => typeof data.title !== 'string' || data.title.trim() === '')
       .map(({ slug }) => slug);
 
-    expect(offenders, `Projects with a missing or empty title: ${offenders.join(', ')}`).toEqual(
-      [],
-    );
+    expect(
+      offenders,
+      `Projects with a missing or empty title: ${offenders.join(', ')}`,
+    ).toEqual([]);
   });
 
   it('points every project at its own GitHub repo', () => {
@@ -123,7 +127,9 @@ describe('project content collection', () => {
       .filter(({ data }) => !Array.isArray(data.stack) || data.stack.length === 0)
       .map(({ slug }) => slug);
 
-    expect(offenders, `Projects with an empty stack: ${offenders.join(', ')}`).toEqual([]);
+    expect(offenders, `Projects with an empty stack: ${offenders.join(', ')}`).toEqual(
+      [],
+    );
   });
 
   it('ships no unconfirmed metrics', () => {
@@ -131,7 +137,9 @@ describe('project content collection', () => {
 
     const offenders = readdirSync(PROJECTS_DIR)
       .filter((name) => name.endsWith('.md') || name.endsWith('.mdx'))
-      .filter((name) => readFileSync(join(PROJECTS_DIR, name), 'utf-8').includes('CONFIRM'));
+      .filter((name) =>
+        readFileSync(join(PROJECTS_DIR, name), 'utf-8').includes('CONFIRM'),
+      );
 
     expect(
       offenders,

@@ -36,10 +36,10 @@ framework and caps JS at 20 KB. **The spec wins**; the skill's intent is met dif
 | Tailwind `dark:` variant | `@theme` tokens swapped under `prefers-color-scheme` | `SPEC.md` already mandates the token strategy; the skill leaves the choice open. |
 | "Motion claimed = motion shown" | Real entry and hover transitions, or the dial drops to 3 | We ship working CSS motion or we ship none. No half-built animation. |
 
-**Open item — icons.** The skill bans hand-rolled SVG icons and requires a real icon
-library (Phosphor, HugeIcons, Radix, Tabler). Adding a dependency is *ask first* in
-`SPEC.md`. `astro-icon` resolves icons at build time with zero client JS, so it fits the
-budget. **Needs George's approval before C-3.** Until then, no icons are shipped.
+**Icons — RESOLVED 2026-08-21.** Approved: `astro-icon` with the **Phosphor** set
+(`@iconify-json/ph`). Icons are resolved and inlined at build time, so client JS stays at
+zero. One family for the whole site, one global stroke weight, no hand-rolled SVG paths.
+Installed in C-3.
 
 ## Committed decisions
 

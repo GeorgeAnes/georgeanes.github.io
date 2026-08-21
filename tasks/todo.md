@@ -80,7 +80,7 @@ Legend: **[G]** = slice gate, do not proceed past it while red.
     definition of done for slice 5.**
   - Files: `tests/content.test.ts`
 
-- [ ] **B-2 · Define collection schemas**
+- [x] **B-2 · Define collection schemas** ✅ 2026-08-21
   - Acceptance: Zod schema for `projects` (`title`, `summary`, `stack[]`, `repoUrl`,
     `featured?`, `order?`, `role?`, `results?`, `heroImage?`) and `posts`
     (`title`, `description`, `pubDate`, `draft?`). `summary` required and non-empty;
