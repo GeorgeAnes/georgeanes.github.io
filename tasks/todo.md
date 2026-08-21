@@ -92,15 +92,14 @@ Legend: **[G]** = slice gate, do not proceed past it while red.
     assertions.
   - Files: `src/content.config.ts`
 
-- [ ] **B-3 · Project ordering helper (TDD, pure)**
+- [x] **B-3 · Project ordering helper (TDD, pure)** ✅ 2026-08-21
   - Acceptance: `sortProjects()` in `src/lib/` puts featured first, then ML/AI-relevant
     ahead of control/robotics (AC3), stable and deterministic within groups.
   - Verify: unit tests cover featured-first, category order, and tie-breaking;
     100% coverage of `src/lib/` (`SPEC.md` → Testing Strategy).
   - Files: `src/lib/sort-projects.ts`, `tests/sort-projects.test.ts`
 
-- [ ] **[G] Gate 2** — content tests fail for exactly the right reason; pass against the
-  fixture; `src/lib/` at 100%.
+- [x] **[G] Gate 2** ✅ 2026-08-21 — content test fails naming all 9 missing slugs (1 failed, 6 passed); schema verified against a valid fixture and rejects each invalid field with a precise message; `src/lib/` at 100% statements, branches, functions, lines.
 
 ---
 
