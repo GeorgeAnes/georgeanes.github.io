@@ -1,5 +1,13 @@
 ---
 import '../styles/global.css';
+/*
+ * Imported for their hashed build URLs so both faces can be preloaded.
+ * Without this the browser only discovers them after parsing the stylesheet,
+ * so they land late and font-display: swap repaints most of the page at once,
+ * which Lighthouse scores as a very poor Speed Index.
+ */
+import geistSans from '@fontsource-variable/geist/files/geist-latin-wght-normal.woff2?url';
+import geistMono from '@fontsource-variable/geist-mono/files/geist-mono-latin-wght-normal.woff2?url';
 import SEO from '../components/SEO.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
@@ -21,6 +29,8 @@ const { title, description, ogImage, ogType, noindex } = Astro.props;
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preload" href={geistSans} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={geistMono} as="font" type="font/woff2" crossorigin />
     <SEO
       title={title}
       description={description}
