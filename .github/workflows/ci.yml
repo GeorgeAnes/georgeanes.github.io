@@ -53,6 +53,7 @@ jobs:
             --max-concurrency 4
             --accept 200,206,429
             --include-mail=false
+            --root-dir ${{ github.workspace }}/dist
             --exclude-path dist/og
             'dist/**/*.html'
           fail: true
