@@ -15,9 +15,10 @@ featured: true
 order: 1
 heroImage: ../../assets/projects/enterprise-ai-document-risk-auditor/screenshot-dashboard.png
 heroImageAlt: >-
-  The auditor's review dashboard, showing a risk posture dial, a breakdown of
-  claims by support category, and a ranked list of the highest-risk claims with
-  their labels. The figures shown come from a synthetic sample document.
+  The auditor's review dashboard running on the live Azure deployment, showing a
+  risk posture dial reading 79 of 100, a breakdown of thirteen extracted claims
+  by support category, and a ranked list of the highest-risk claims with their
+  labels. The figures shown come from a synthetic sample document.
 ---
 
 ## Problem
