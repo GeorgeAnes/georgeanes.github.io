@@ -22,6 +22,8 @@ const {
   summary,
   stack,
   repoUrl,
+  liveUrl,
+  liveNote,
   role,
   results,
   heroImage,
@@ -69,15 +71,37 @@ const { Content } = await render(project);
           </div>
         </dl>
 
-        <a
-          href={repoUrl}
-          rel="noopener"
-          class="border-border-strong hover:border-accent hover:text-accent rounded-md mt-6 inline-flex items-center gap-2 border px-4 py-2 text-sm transition-colors"
-          style="transition-duration: var(--duration-fast); transition-timing-function: var(--ease-out-quint)"
-        >
-          <Icon name="ph:github-logo" class="size-4" aria-hidden="true" />
-          View source
-        </a>
+        <div class="mt-6 flex flex-wrap gap-3">
+          {
+            liveUrl && (
+              <a
+                href={liveUrl}
+                rel="noopener"
+                class="border-accent text-accent hover:bg-accent hover:text-bg rounded-md inline-flex items-center gap-2 border px-4 py-2 text-sm transition-colors"
+                style="transition-duration: var(--duration-fast); transition-timing-function: var(--ease-out-quint)"
+              >
+                <Icon name="ph:arrow-square-out" class="size-4" aria-hidden="true" />
+                Live demo
+              </a>
+            )
+          }
+
+          <a
+            href={repoUrl}
+            rel="noopener"
+            class="border-border-strong hover:border-accent hover:text-accent rounded-md inline-flex items-center gap-2 border px-4 py-2 text-sm transition-colors"
+            style="transition-duration: var(--duration-fast); transition-timing-function: var(--ease-out-quint)"
+          >
+            <Icon name="ph:github-logo" class="size-4" aria-hidden="true" />
+            View source
+          </a>
+        </div>
+
+        {
+          /* Sets expectations before the click rather than after: a visitor
+             who waits twenty seconds with no explanation assumes it is broken. */
+          liveNote && <p class="text-muted mt-3 max-w-[38ch] text-xs">{liveNote}</p>
+        }
       </div>
     </header>
 

@@ -32,6 +32,19 @@ const projects = defineCollection({
         domain: z.enum(PROJECT_DOMAINS),
         stack: z.array(z.string().min(1)).nonempty(),
         repoUrl: z.string().url(),
+        /**
+         * A deployed, publicly reachable instance. Optional because most of
+         * these projects are research or coursework with nothing to host --
+         * only a project that genuinely runs somewhere should claim a demo.
+         */
+        liveUrl: z.string().url().optional(),
+        /**
+         * Shown next to the live link when the demo is on scale-to-zero
+         * infrastructure and the first request is visibly slow. Setting this
+         * without `liveUrl` is meaningless, and the refine below rejects it:
+         * a warning about a demo that does not exist is just noise.
+         */
+        liveNote: z.string().min(1).optional(),
         featured: z.boolean().default(false),
         /** Manual tie-break within a domain. Lower sorts first. */
         order: z.number().int().optional(),
@@ -65,6 +78,10 @@ const projects = defineCollection({
       .refine((data) => data.heroImage === undefined || data.heroImageAlt !== undefined, {
         message: 'heroImageAlt is required whenever heroImage is set',
         path: ['heroImageAlt'],
+      })
+      .refine((data) => data.liveNote === undefined || data.liveUrl !== undefined, {
+        message: 'liveNote is only meaningful alongside liveUrl',
+        path: ['liveNote'],
       }),
 });
 
