@@ -13,9 +13,8 @@ interface Props {
    */
   headingLevel?: 2 | 3;
   /**
-   * Set when this card holds the page's largest contentful element, which is
-   * the case for the card in the home page hero. Without it the image is
-   * discovered late and LCP pays a load delay.
+   * Set when this card is the page's above-the-fold lead image, as on the
+   * project index. Homepage cards below the decorative hero stay lazy.
    */
   priority?: boolean;
 }
@@ -31,14 +30,14 @@ const shownStack = stack.slice(0, 3);
 
 <article
   class:list={[
-    'group border-border bg-surface rounded-lg relative flex flex-col overflow-hidden border transition-colors',
+    'project-card group border-border bg-surface rounded-lg relative flex h-full flex-col overflow-hidden border',
     'hover:border-accent focus-within:border-accent',
+    isLead && 'project-card--lead',
   ]}
-  style="transition-duration: var(--duration-base); transition-timing-function: var(--ease-out-quint)"
 >
   {
     heroImage && heroImageAlt && (
-      <div class="border-border aspect-[16/10] overflow-hidden border-b">
+      <div class="project-visual border-border relative aspect-[16/10] overflow-hidden border-b">
         <Picture
           src={heroImage}
           alt={heroImageAlt}
@@ -46,9 +45,7 @@ const shownStack = stack.slice(0, 3);
           widths={isLead ? [480, 768, 1024] : [360, 640]}
           priority={priority}
           sizes={
-            isLead
-              ? '(min-width: 1024px) 640px, 100vw'
-              : '(min-width: 1024px) 380px, 100vw'
+            isLead ? '(min-width: 768px) 540px, 100vw' : '(min-width: 640px) 480px, 100vw'
           }
           class="h-full w-full object-cover"
         />
@@ -64,7 +61,12 @@ const shownStack = stack.slice(0, 3);
       </a>
     </Heading>
 
-    <p class:list={['text-muted mt-3 flex-1', isLead ? 'max-w-[52ch]' : 'text-sm']}>
+    <p
+      class:list={[
+        'text-muted mt-3 flex-1 leading-relaxed',
+        isLead ? 'max-w-[52ch]' : 'text-sm',
+      ]}
+    >
       {summary}
     </p>
 
@@ -79,3 +81,39 @@ const shownStack = stack.slice(0, 3);
     </ul>
   </div>
 </article>
+
+<style>
+  .project-card {
+    transition:
+      border-color var(--duration-base),
+      transform var(--duration-base) var(--ease-out-quint);
+  }
+
+  .project-visual :global(img) {
+    position: absolute;
+    inset: 0;
+    transition: transform 550ms var(--ease-out-quint);
+  }
+
+  @media (min-width: 768px) {
+    .project-card--lead {
+      display: grid;
+      grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+    }
+    .project-card--lead .project-visual {
+      aspect-ratio: auto;
+      min-height: 20rem;
+      border-bottom: 0;
+      border-right: 1px solid var(--ui-border);
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) {
+    .project-card:hover {
+      transform: translateY(-3px);
+    }
+    .project-card:hover .project-visual :global(img) {
+      transform: scale(1.025);
+    }
+  }
+</style>

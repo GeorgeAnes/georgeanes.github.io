@@ -4,6 +4,42 @@ Status: **Shipped 2026-08-21. Live at https://georgeanes.github.io/**
 Verification: `tasks/lighthouse-report.md`. Plan in `tasks/plan.md`.
 Last updated: 2026-08-20
 
+## UI refresh approved 2026-08-28
+
+George selected **Midnight + iridescent** for the portfolio redesign. The first
+reviewable revision covers the homepage, project index, shared palette, and
+project-cover interactions.
+George explicitly authorized the commit, feature-branch publication, pull request,
+and merge after CI passes on 2026-08-28. GitHub Pages deploys on that merge.
+Local browser verification passed 205 checks, including both appearances,
+responsive layouts, reduced motion, and navigation without JavaScript. Remote CI
+is still required before merge; deployed Lighthouse scores must be measured again.
+
+The VFRM source repository is private. George approved keeping its existing public
+case study and replacing the source link with "Source code is private". This is an
+explicit exception to the v1 public-source-link requirement; repository visibility,
+case-study claims, and the other eight source links remain unchanged.
+
+- After review, match the complete reference composition, not only its orb.
+  Midnight is the initial presentation; an explicit light-theme control retains
+  the light counterpart and remembers the visitor's choice. Geist and Geist Mono
+  stay self-hosted. This supersedes the v1 system-only theme restriction below.
+- The homepage uses the headline "AI for engineering." with George's identity,
+  existing MSc positioning, and both primary actions above the laptop fold.
+- Integrate the orb into a full hero scene with floor light and sparse particles.
+  Selected work uses the reference's large tile plus two stacked tiles, with
+  decorative ribbon, particle-wave, and network covers and concise factual previews.
+  Real screenshots, full summaries, and results stay on the project detail pages.
+  Decorative images use empty alternative text; project links have visible titles.
+- Native CSS provides short entry, hover, and scroll-linked image motion. Motion
+  must not hide readable content, trap scrolling, or run continuously. Reduced
+  motion and unsupported browsers receive the usable static layout.
+- No new runtime dependency, client framework, tracking, or external image host.
+  Existing URL, content, performance, and accessibility requirements still apply.
+- Implementation happens on `portfolio-updates`. Do not commit, push, merge, or
+  deploy without explicit user authorization. Obtain execution approval before
+  the first bundled-Chromium Playwright launch; stop on endpoint-security denial.
+
 ## Objective
 
 Build and deploy a public portfolio website that presents George Anesiadis as a
@@ -234,7 +270,7 @@ Done means every one of these is objectively true:
 ## Out of Scope (v1)
 
 CV/resume page and PDF download · contact form or any backend · comments · search ·
-i18n · CMS · manual dark/light toggle (respect `prefers-color-scheme` only) ·
+i18n · CMS ·
 live GitHub API stats · RSS beyond a basic feed if it comes free with the blog.
 
 ## Resolved Decisions

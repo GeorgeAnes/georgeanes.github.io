@@ -7,6 +7,7 @@ const PAGES = [
   '/404',
   '/projects/',
   '/projects/process-mining-kpi-dashboard',
+  '/projects/vfrm-agentic-design-assistant/',
   '/blog/',
 ];
 
@@ -22,6 +23,10 @@ for (const path of PAGES) {
         page,
       }) => {
         await page.emulateMedia({ colorScheme: scheme });
+        await page.addInitScript(
+          (theme) => localStorage.setItem('portfolio-theme', theme),
+          scheme,
+        );
         await page.setViewportSize({ width, height: 900 });
         await page.goto(path);
 
@@ -41,11 +46,36 @@ for (const path of PAGES) {
 
 /**
  * SPEC.md -> Always do: the site must stay fully functional with JavaScript
- * disabled. It ships zero client JS, so this should hold trivially, and the
- * test exists to catch the day someone adds an island that breaks it.
+ * disabled. The optional appearance switch is hidden; content and navigation
+ * do not depend on its script.
  */
 test.describe('without JavaScript', () => {
   test.use({ javaScriptEnabled: false });
+
+  test('the mobile project CTA navigates after its entrance animation', async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.emulateMedia({ reducedMotion: 'no-preference' });
+    await page.goto('/');
+    // Use the real entrance completion, not a forced click or a fixed sleep.
+    await page.evaluate(async () => {
+      await document.fonts.ready;
+      await Promise.all(
+        document
+          .getAnimations()
+          .filter(
+            (animation) =>
+              animation.timeline instanceof DocumentTimeline &&
+              animation.effect?.getTiming().iterations !== Infinity,
+          )
+          .map((animation) => animation.finished.catch(() => {})),
+      );
+    });
+    await page.getByRole('link', { name: 'View projects', exact: true }).click();
+    await expect(page).toHaveURL(/\/projects\/$/);
+    await expect(page.locator('article')).toHaveCount(9);
+  });
 
   for (const path of PAGES) {
     test(`${path} still renders and navigates`, async ({ page }) => {
@@ -53,6 +83,8 @@ test.describe('without JavaScript', () => {
       expect(response?.status()).toBe(200);
 
       await expect(page.locator('h1')).toHaveCount(1);
+      await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+      await expect(page.locator('#theme-toggle')).toBeHidden();
       await expect(page.locator('nav[aria-label="Primary"] a').first()).toBeVisible();
       await expect(page.locator('footer a[href^="mailto:"]')).toHaveCount(1);
     });

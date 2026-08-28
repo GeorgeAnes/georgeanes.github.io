@@ -22,6 +22,7 @@ const {
   summary,
   stack,
   repoUrl,
+  repoPrivate,
   liveUrl,
   liveNote,
   role,
@@ -86,15 +87,21 @@ const { Content } = await render(project);
             )
           }
 
-          <a
-            href={repoUrl}
-            rel="noopener"
-            class="border-border-strong hover:border-accent hover:text-accent rounded-md inline-flex items-center gap-2 border px-4 py-2 text-sm transition-colors"
-            style="transition-duration: var(--duration-fast); transition-timing-function: var(--ease-out-quint)"
-          >
-            <Icon name="ph:github-logo" class="size-4" aria-hidden="true" />
-            View source
-          </a>
+          {
+            repoPrivate ? (
+              <p class="text-muted self-center text-sm">Source code is private</p>
+            ) : (
+              <a
+                href={repoUrl}
+                rel="noopener"
+                class="border-border-strong hover:border-accent hover:text-accent rounded-md inline-flex items-center gap-2 border px-4 py-2 text-sm transition-colors"
+                style="transition-duration: var(--duration-fast); transition-timing-function: var(--ease-out-quint)"
+              >
+                <Icon name="ph:github-logo" class="size-4" aria-hidden="true" />
+                View source
+              </a>
+            )
+          }
         </div>
 
         {

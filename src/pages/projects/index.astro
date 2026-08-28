@@ -2,15 +2,16 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ProjectCard from '../../components/ProjectCard.astro';
+import FeaturedProject from '../../components/FeaturedProject.astro';
 import { sortProjects } from '../../lib/sort-projects';
+import { projectCovers } from '../../config/project-covers';
 
 const projects = sortProjects(await getCollection('projects'));
 
-/*
- * The first project leads at full width; the rest sit in a two-column grid.
- * Cell count always matches project count, so the grid never carries a hole.
- */
-const [lead, ...rest] = projects;
+const featured = projects.filter(
+  (project) => project.data.featured && projectCovers[project.id],
+);
+const rest = projects.filter((project) => !featured.includes(project));
 ---
 
 <BaseLayout
@@ -18,9 +19,9 @@ const [lead, ...rest] = projects;
   description="Engineering and machine learning projects by George Anesiadis, spanning AI systems, control and robotics, optimization and industrial data science."
   ogImage="/og/projects.png"
 >
-  <div class="mx-auto w-full max-w-5xl px-6 py-16">
+  <div class="site-shell project-index">
     <header class="max-w-[58ch]">
-      <h1 class="text-display font-semibold">Projects</h1>
+      <h1>Projects</h1>
       <p class="text-muted mt-5 text-lg">
         Work across AI systems, control and robotics, optimization and industrial data
         science. Each write-up covers the problem, the approach taken, and what the result
@@ -32,11 +33,21 @@ const [lead, ...rest] = projects;
       projects.length === 0 ? (
         <p class="text-muted mt-16 font-mono text-sm">No projects published yet.</p>
       ) : (
-        <div class="mt-14 grid gap-6">
-          {lead && <ProjectCard project={lead} size="lead" headingLevel={2} priority />}
+        <div class="mt-14">
+          {featured.length > 0 && (
+            <div class="work-mosaic">
+              {featured.map((project) => (
+                <FeaturedProject
+                  project={project}
+                  cover={projectCovers[project.id]}
+                  headingLevel={2}
+                />
+              ))}
+            </div>
+          )}
 
           {rest.length > 0 && (
-            <div class="grid gap-6 sm:grid-cols-2">
+            <div class="mt-12 grid gap-6 sm:grid-cols-2">
               {rest.map((project) => (
                 <ProjectCard project={project} headingLevel={2} />
               ))}
@@ -47,3 +58,15 @@ const [lead, ...rest] = projects;
     }
   </div>
 </BaseLayout>
+
+<style>
+  .project-index {
+    padding-block: 4.5rem;
+  }
+  h1 {
+    font-size: clamp(3rem, 6vw, 5rem);
+    font-weight: 450;
+    line-height: 1.05;
+    letter-spacing: -0.05em;
+  }
+</style>

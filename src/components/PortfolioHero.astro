@@ -1,0 +1,245 @@
+---
+import { Picture } from 'astro:assets';
+import { Icon } from 'astro-icon/components';
+import orb from '../assets/visuals/midnight-orb.png';
+import { SITE_NAME } from '../config/site';
+---
+
+<section class="portfolio-hero">
+  <div class="hero-inner site-shell">
+    <div class="hero-copy">
+      <p class="hero-name text-muted font-mono">{SITE_NAME}</p>
+      <h1>AI for <span>engineering.</span></h1>
+      <p data-probe="muted" class="hero-description text-muted">
+        MSc Artificial Intelligence and Engineering Systems at TU/e. Building AI systems
+        for real engineering problems.
+      </p>
+      <div class="hero-actions">
+        <a href="/projects/" class="hero-primary bg-accent text-on-accent rounded-md">
+          View projects
+          <Icon name="ph:arrow-right" class="size-4" aria-hidden="true" />
+        </a>
+        <a href="#contact" class="hero-secondary border-border-strong rounded-md">
+          Get in touch
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-art" data-hero-art aria-hidden="true">
+      <div class="orb-recede">
+        <Picture
+          src={orb}
+          alt=""
+          formats={['avif', 'webp']}
+          widths={[320, 480, 640, 896]}
+          sizes="(min-width: 1100px) 660px, (min-width: 900px) 60vw, (min-width: 600px) 512px, calc(100vw - 48px)"
+          priority
+          class="orb-image"
+        />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .portfolio-hero {
+    position: relative;
+    overflow: clip;
+    background: radial-gradient(
+      ellipse at 76% 64%,
+      rgb(56 81 166 / 0.12),
+      transparent 48%
+    );
+  }
+  .hero-inner {
+    position: relative;
+    display: grid;
+    padding-block: 3rem 0;
+  }
+
+  .hero-copy {
+    position: relative;
+    z-index: 2;
+    align-self: center;
+    max-width: 40rem;
+  }
+  .hero-name {
+    margin-bottom: 1.35rem;
+    font-size: 0.8125rem;
+  }
+  h1 {
+    font-size: clamp(2.7rem, 7vw, 6.25rem);
+    font-weight: 450;
+    line-height: 1.02;
+    letter-spacing: -0.055em;
+  }
+  h1 span {
+    display: block;
+  }
+  .hero-description {
+    max-width: 37ch;
+    margin-top: 1.5rem;
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 2rem;
+  }
+  .hero-actions a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    min-height: 2.875rem;
+    padding: 0.75rem 1.25rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition:
+      transform var(--duration-base) var(--ease-out-quint),
+      border-color var(--duration-base),
+      color var(--duration-base);
+  }
+  .hero-secondary {
+    border-width: 1px;
+  }
+  .hero-secondary:hover {
+    color: var(--ui-accent);
+    border-color: var(--ui-accent);
+  }
+  .hero-art {
+    position: relative;
+    width: 100%;
+    max-width: 32rem;
+    aspect-ratio: 1;
+    justify-self: center;
+    margin-top: -0.5rem;
+  }
+  .hero-art::before {
+    content: '';
+    position: absolute;
+    inset: 77% 14% 6% 14%;
+    background: radial-gradient(
+      ellipse,
+      rgb(88 145 251 / 0.5),
+      rgb(93 71 191 / 0.12) 42%,
+      transparent 70%
+    );
+    filter: blur(12px);
+    pointer-events: none;
+  }
+  .hero-art::after {
+    content: '';
+    position: absolute;
+    inset: 0 -8% -5%;
+    background:
+      radial-gradient(circle at 13% 69%, #668cf7 0 1px, transparent 2px),
+      radial-gradient(circle at 20% 88%, #8685dc 0 1.5px, transparent 2.5px),
+      radial-gradient(circle at 6% 81%, #6678c8 0 1px, transparent 2px),
+      radial-gradient(circle at 33% 94%, #798ad4 0 1px, transparent 2px),
+      radial-gradient(circle at 77% 89%, #9c83e3 0 1.5px, transparent 2.5px),
+      radial-gradient(circle at 91% 73%, #668cf7 0 1px, transparent 2px);
+    opacity: 0.6;
+    pointer-events: none;
+  }
+  .orb-recede {
+    width: 100%;
+    height: 100%;
+  }
+  .hero-art :global(.orb-image) {
+    display: block;
+    width: 100%;
+    height: auto;
+    /* Screen blending integrates the opaque navy source into the illuminated scene. */
+    mix-blend-mode: screen;
+    mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 60%, transparent 75%);
+    transition: transform 650ms var(--ease-out-quint);
+  }
+
+  :global([data-theme='light']) .hero-art :global(.orb-image) {
+    /* Turn the dark source backdrop into a light one before blending it away. */
+    filter: invert(1) hue-rotate(180deg);
+    mix-blend-mode: multiply;
+  }
+
+  @media (min-width: 900px) {
+    .hero-inner {
+      min-height: 38rem;
+      padding-block: 3rem 4rem;
+    }
+    .hero-copy {
+      width: 62%;
+    }
+    .hero-art {
+      position: absolute;
+      top: 50%;
+      right: -3.5%;
+      translate: 0 -50%;
+      width: 61%;
+      max-width: 41.25rem;
+      margin: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-copy > *,
+    .hero-art {
+      animation: hero-arrive 700ms var(--ease-out-quint) both;
+    }
+    .hero-description {
+      animation-delay: 70ms;
+    }
+    .hero-actions {
+      animation-delay: 120ms;
+    }
+    .hero-art {
+      animation-duration: 1000ms;
+    }
+
+    @supports (animation-timeline: scroll()) {
+      .orb-recede {
+        /* Longhands keep Lightning CSS from folding the timeline into an
+           animation shorthand Chromium cannot parse (lightningcss#1283). */
+        animation-name: orb-recede;
+        animation-duration: 1s;
+        animation-timing-function: linear;
+        animation-fill-mode: both;
+        animation-timeline: scroll(root block);
+        animation-range: 0px 650px;
+      }
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .hero-art:hover :global(.orb-image) {
+        transform: scale(1.025) rotate(-2deg);
+      }
+      .hero-actions a:hover {
+        transform: translateY(-2px);
+      }
+      .hero-actions a:active {
+        transform: translateY(0) scale(0.98);
+      }
+    }
+  }
+  @keyframes hero-arrive {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes orb-recede {
+    from {
+      opacity: 1;
+      transform: scale(1);
+    }
+    to {
+      opacity: 0.12;
+      transform: translateY(6%) scale(0.84);
+    }
+  }
+</style>

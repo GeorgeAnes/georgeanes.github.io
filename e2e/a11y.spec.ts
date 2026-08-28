@@ -6,6 +6,7 @@ const PAGES = [
   { name: 'not found', path: '/404' },
   { name: 'projects index', path: '/projects/' },
   { name: 'project detail', path: '/projects/process-mining-kpi-dashboard' },
+  { name: 'private-source project', path: '/projects/vfrm-agentic-design-assistant/' },
   { name: 'blog index', path: '/blog/' },
 ];
 

@@ -1,0 +1,71 @@
+---
+import { Icon } from 'astro-icon/components';
+---
+
+<div class="theme-slot">
+  <button id="theme-toggle" type="button" aria-label="Use light appearance" hidden>
+    <Icon name="ph:sun" class="sun size-4" aria-hidden="true" />
+    <Icon name="ph:moon" class="moon size-4" aria-hidden="true" />
+  </button>
+</div>
+
+<script>
+  const button = document.querySelector<HTMLButtonElement>('#theme-toggle');
+  if (button) {
+    const root = document.documentElement;
+    const updateLabel = () => {
+      button.setAttribute(
+        'aria-label',
+        root.dataset.theme === 'light'
+          ? 'Use Midnight appearance'
+          : 'Use light appearance',
+      );
+    };
+    updateLabel();
+    button.hidden = false;
+    button.addEventListener('click', () => {
+      const theme = root.dataset.theme === 'light' ? 'dark' : 'light';
+      root.dataset.theme = theme;
+      updateLabel();
+      try {
+        localStorage.setItem('portfolio-theme', theme);
+      } catch {
+        /* In-memory choice still works. */
+      }
+    });
+  }
+</script>
+
+<style>
+  .theme-slot {
+    width: 2.75rem;
+    height: 2.75rem;
+    flex: none;
+  }
+  button:not([hidden]) {
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 100%;
+    border: 1px solid var(--ui-border);
+    border-radius: var(--radius-md);
+    color: var(--ui-muted);
+    cursor: pointer;
+    transition:
+      border-color 180ms,
+      color 180ms;
+  }
+  button:hover {
+    border-color: var(--ui-accent);
+    color: var(--ui-accent);
+  }
+  .moon {
+    display: none;
+  }
+  :global([data-theme='light']) .sun {
+    display: none;
+  }
+  :global([data-theme='light']) .moon {
+    display: block;
+  }
+</style>
