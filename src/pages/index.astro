@@ -1,21 +1,16 @@
 ---
 import { getCollection } from 'astro:content';
-import { Icon } from 'astro-icon/components';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import PortfolioHero from '../components/PortfolioHero.astro';
+import FeaturedProject from '../components/FeaturedProject.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import ContactLinks from '../components/ContactLinks.astro';
 import { sortProjects } from '../lib/sort-projects';
 import { SITE_NAME } from '../config/site';
+import { projectCovers } from '../config/project-covers';
 
 const all = sortProjects(await getCollection('projects'));
 const featured = all.filter((project) => project.data.featured);
-
-/*
- * The strongest project carries the hero's visual, so the first thing a visitor
- * sees is real work rather than a decorative graphic. The other two featured
- * projects follow below.
- */
-const [heroProject, ...restFeatured] = featured;
 
 const focusAreas = [
   'Model predictive control, robotics and multi-agent systems',
@@ -30,60 +25,13 @@ const focusAreas = [
   description="MSc Artificial Intelligence and Engineering Systems student at TU/e, building AI systems for engineering: control, robotics, optimization and computer vision."
   ogImage="/og/default.png"
 >
-  {
-    /*
-     * Hero. Asymmetric rather than centred, and held to three text elements:
-     * headline, one line of subtext, and the CTA pair. Everything else that
-     * wants to be here (focus areas, contact) lives in its own section below.
-     */
-  }
-  <section class="mx-auto w-full max-w-5xl px-6 pt-12 pb-20 lg:pt-16">
-    <div
-      class="grid items-start gap-x-12 gap-y-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)]"
-    >
-      <div>
-        <h1 class="text-display font-semibold">George Anesiadis</h1>
-
-        <p
-          data-probe="muted"
-          class="text-muted mt-5 max-w-[46ch] text-lg leading-relaxed"
-        >
-          MSc Artificial Intelligence and Engineering Systems at TU/e. I build AI systems
-          for engineering problems.
-        </p>
-
-        <div class="mt-8 flex flex-wrap gap-3">
-          <a
-            href="/projects/"
-            class="bg-accent text-on-accent rounded-md inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium transition-opacity hover:opacity-90"
-            style="transition-duration: var(--duration-fast); transition-timing-function: var(--ease-out-quint)"
-          >
-            View projects
-            <Icon name="ph:arrow-right" class="size-4" aria-hidden="true" />
-          </a>
-          <a
-            href="#contact"
-            class="border-border-strong hover:border-accent hover:text-accent rounded-md inline-flex items-center border px-5 py-2.5 text-sm transition-colors"
-            style="transition-duration: var(--duration-fast); transition-timing-function: var(--ease-out-quint)"
-          >
-            Get in touch
-          </a>
-        </div>
-      </div>
-
-      {
-        heroProject && (
-          <ProjectCard project={heroProject} size="lead" headingLevel={2} priority />
-        )
-      }
-    </div>
-  </section>
+  <PortfolioHero />
 
   {
-    restFeatured.length > 0 && (
-      <section class="mx-auto w-full max-w-5xl px-6 py-16">
-        <div class="flex flex-wrap items-baseline justify-between gap-4">
-          <h2 class="text-title font-semibold">Selected work</h2>
+    featured.length > 0 && (
+      <section id="selected-work" class="site-shell selected-work">
+        <div class="section-heading">
+          <h2>Selected work</h2>
           <a
             href="/projects/"
             data-probe="accent"
@@ -93,60 +41,54 @@ const focusAreas = [
           </a>
         </div>
 
-        <div class="mt-8 grid gap-6 sm:grid-cols-2">
-          {restFeatured.map((project) => (
-            <ProjectCard project={project} />
-          ))}
+        <div class="work-mosaic">
+          {featured.map((project) =>
+            projectCovers[project.id] ? (
+              <FeaturedProject project={project} cover={projectCovers[project.id]} />
+            ) : (
+              <ProjectCard project={project} />
+            ),
+          )}
         </div>
       </section>
     )
   }
 
-  {/* Prose plus a list: a different layout family from the two card sections. */}
-  <section id="about" class="border-border mx-auto w-full max-w-5xl border-t px-6 py-16">
-    <div class="grid gap-x-12 gap-y-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)]">
-      <h2 class="text-title font-semibold">About</h2>
-
-      <div>
-        <p class="text-muted leading-relaxed">
+  <section id="about" class="site-shell about-section">
+    <p class="section-label">About</p>
+    <div class="about-grid">
+      <div class="about-copy">
+        <h2>From engineering<br />systems to AI.</h2>
+        <p>
           I am an MSc student in Artificial Intelligence and Engineering Systems at
           Eindhoven University of Technology, on the High Tech Systems and Robotics track,
           with a background in Chemical Engineering. My work sits where machine learning
           meets engineering systems: control, robotics, optimization, computer vision and
           industrial data science.
         </p>
-        <p class="text-muted mt-4 leading-relaxed">
+        <p>
           Most of the projects here started as research or coursework and were then
           rebuilt as public, reproducible versions. Each write-up states what the result
           shows and, where it matters, what it does not.
         </p>
-
-        <ul class="mt-8 grid gap-3 sm:grid-cols-2">
-          {
-            focusAreas.map((area) => (
-              <li class="text-muted flex gap-3 text-sm">
-                <Icon
-                  name="ph:arrow-right"
-                  class="text-accent mt-1 size-4 shrink-0"
-                  aria-hidden="true"
-                />
-                <span>{area}</span>
-              </li>
-            ))
-          }
+      </div>
+      <div class="focus-areas">
+        <h3>Areas I work in</h3>
+        <ul>
+          {focusAreas.map((area) => <li>{area}</li>)}
         </ul>
       </div>
     </div>
   </section>
 
-  <section
-    id="contact"
-    class="border-border mx-auto w-full max-w-5xl border-t px-6 py-16"
-  >
-    <div class="grid gap-x-12 gap-y-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)]">
-      <h2 class="text-title font-semibold">Contact</h2>
+  <section id="contact" class="contact-section">
+    <div class="site-shell contact-grid">
       <div>
-        <p class="text-muted max-w-[52ch] leading-relaxed">
+        <p class="section-label">Contact</p>
+        <h2>Let’s talk AI<br />and engineering.</h2>
+      </div>
+      <div class="contact-details">
+        <p>
           Open to conversations about machine learning and AI engineering roles, and to
           questions about any of the work here.
         </p>
@@ -157,3 +99,99 @@ const focusAreas = [
     </div>
   </section>
 </BaseLayout>
+
+<style>
+  .selected-work {
+    padding-block: 1rem 6rem;
+  }
+  .section-heading {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 1.75rem;
+  }
+  .section-heading h2 {
+    font-size: 1.5rem;
+    font-weight: 500;
+    letter-spacing: -0.025em;
+  }
+  .section-label {
+    color: var(--ui-muted);
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    margin-bottom: 1.5rem;
+  }
+  .about-section {
+    padding-block: 4.5rem 6rem;
+    border-top: 1px solid var(--ui-border);
+  }
+  .about-grid,
+  .contact-grid {
+    display: grid;
+    gap: 3rem;
+  }
+  .about-copy h2,
+  .contact-section h2 {
+    font-size: clamp(2.1rem, 4vw, 3.5rem);
+    line-height: 1.1;
+    font-weight: 450;
+    letter-spacing: -0.045em;
+  }
+  .about-copy p {
+    max-width: 59ch;
+    margin-top: 1.5rem;
+    color: var(--ui-muted);
+    line-height: 1.8;
+  }
+  .focus-areas {
+    align-self: end;
+  }
+  .focus-areas h3 {
+    font-size: 0.8125rem;
+    color: var(--ui-muted);
+    margin-bottom: 0.5rem;
+  }
+  .focus-areas li {
+    padding-block: 1.25rem;
+    border-bottom: 1px solid var(--ui-border);
+    font-size: 1.0625rem;
+    line-height: 1.5;
+  }
+  .contact-section {
+    border-top: 1px solid var(--ui-border);
+    padding-block: 5rem;
+    background: radial-gradient(
+      ellipse at 0 100%,
+      rgb(74 91 170 / 0.13),
+      transparent 60%
+    );
+  }
+  .contact-details {
+    align-self: end;
+  }
+  .contact-details p {
+    max-width: 43ch;
+    color: var(--ui-muted);
+    line-height: 1.8;
+  }
+  @media (min-width: 900px) {
+    .about-grid,
+    .contact-grid {
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 6rem;
+    }
+  }
+  @media (max-width: 599px) {
+    .selected-work {
+      padding-bottom: 4rem;
+    }
+    .about-section {
+      padding-block: 3rem 4rem;
+    }
+    .contact-section {
+      padding-block: 3.5rem;
+    }
+  }
+</style>

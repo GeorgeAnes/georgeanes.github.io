@@ -1,5 +1,62 @@
 # Design Direction
 
+## Approved refresh: Midnight + iridescent
+
+### Reference-fidelity correction after prototype review
+
+George rejected the palette-plus-orb interpretation. This is a visual overhaul,
+not preservation of the original card layout. Follow the complete right-hand
+Midnight reference: wider integrated hero scene, lighter display typography,
+subtle cyan/violet light, and one large project cover beside two stacked covers.
+Continue that visual language into About, Contact, and the project index.
+
+`DESIGN_VARIANCE: 8`, `MOTION_INTENSITY: 6`, `VISUAL_DENSITY: 4`.
+Midnight is the default, with an explicit, persisted light preference. This
+supersedes the earlier system-only default. The small theme script is vanilla;
+all content and navigation still work without JavaScript.
+
+The three generated project covers are decorative editorial artwork, never
+presented as actual results or architectures. Keep the real evidence in case
+studies. Retain route slugs, names, team attribution, and factual claims.
+
+The final local Playwright revision passed 205 checks, including actual computed
+scroll transforms/opacity, hover enlargement, both appearances, reduced motion,
+and navigation without JavaScript. Animation longhands preserve scroll timelines
+through the installed CSS optimizer. George explicitly authorized publication
+and merge after CI passes on 2026-08-28; deployment verification remains separate.
+
+Selected by George on 2026-08-28. This section supersedes the older palette,
+hero-artwork restriction, layout restrictions, theme default, and motion dial
+below; all content, performance, accessibility, and scope constraints remain
+in force. The project index shares the featured mosaic before its full archive.
+
+### First-prototype direction (superseded by the review above)
+
+Reading this as a professional AI engineering portfolio with a cinematic hero
+and calm, evidence-led project pages. Dials: variance **7**, motion **6**, density
+**4**. Keep Astro, native CSS, Geist, Geist Mono, and the Phosphor icon family.
+
+- Dark palette: midnight background, slightly lighter navy surfaces, ice-blue
+  accent, off-white text. Light counterpart: cool near-white, blue-gray text,
+  darker blue accent. Both follow the existing system preference.
+- The hero pairs "AI for engineering." with one generated refractive glass orb.
+  Its cyan/violet interference colors are approved artwork, not a general
+  purple-gradient UI. Keep real project images below; never invent results.
+- Use a short, finite hero entrance; a gentle scroll-linked orb recession;
+  and small project-image/CTA hover transforms. No perpetual motion, scroll
+  hijacking, cursor replacement, WebGL scene, or animation library.
+- Prefer native CSS scroll timelines behind feature and reduced-motion queries.
+  Default styles stay visible and fully usable without JavaScript.
+- Preserve the three featured projects, the remaining project routes, contact
+  links, and the empty-blog behavior. Do not change their technical claims.
+- Generated source artwork came from the built-in image-generation tool. The
+  source PNG has an opaque dark background; render it through Astro's image
+  pipeline and visually check the edge treatment in both schemes.
+
+The first slice was a local homepage prototype, not an authorized release.
+
+## Original v1 design record (historical)
+
 Produced with the `design-taste-frontend` skill, 2026-08-21. Binding on every UI task
 (C-1 onward). Re-read before building any component or page.
 

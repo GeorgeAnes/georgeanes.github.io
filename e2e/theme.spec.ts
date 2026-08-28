@@ -58,8 +58,10 @@ async function paletteOf(page: Page): Promise<Record<string, Rgb>> {
 }
 
 test.describe('colour tokens', () => {
-  test('light scheme paints a light background with readable text', async ({ page }) => {
-    await page.emulateMedia({ colorScheme: 'light' });
+  test('the light preference paints a light background with readable text', async ({
+    page,
+  }) => {
+    await page.addInitScript(() => localStorage.setItem('portfolio-theme', 'light'));
     await page.goto('/');
     const palette = await paletteOf(page);
 
@@ -69,9 +71,12 @@ test.describe('colour tokens', () => {
     expect(contrastRatio(palette.accent, palette.background)).toBeGreaterThanOrEqual(4.5);
   });
 
-  test('dark scheme paints a dark background with readable text', async ({ page }) => {
-    await page.emulateMedia({ colorScheme: 'dark' });
+  test('Midnight is the default even on a light system, with readable text', async ({
+    page,
+  }) => {
+    await page.emulateMedia({ colorScheme: 'light' });
     await page.goto('/');
+    await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
     const palette = await paletteOf(page);
 
     expect(relativeLuminance(palette.background)).toBeLessThan(0.15);
@@ -80,15 +85,41 @@ test.describe('colour tokens', () => {
     expect(contrastRatio(palette.accent, palette.background)).toBeGreaterThanOrEqual(4.5);
   });
 
-  test('the two schemes are actually different', async ({ page }) => {
-    await page.emulateMedia({ colorScheme: 'light' });
+  test('the appearance switch changes the palette and persists across navigation', async ({
+    page,
+  }) => {
     await page.goto('/');
-    const light = await paletteOf(page);
-
-    await page.emulateMedia({ colorScheme: 'dark' });
     const dark = await paletteOf(page);
-
+    await page.getByRole('button', { name: 'Use light appearance', exact: true }).click();
+    const light = await paletteOf(page);
     expect(dark.background).not.toEqual(light.background);
     expect(dark.text).not.toEqual(light.text);
+
+    await page.getByRole('link', { name: 'View projects', exact: true }).click();
+    await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
+    await page
+      .getByRole('button', { name: 'Use Midnight appearance', exact: true })
+      .click();
+    await page.reload();
+    await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+  });
+
+  test('unavailable browser storage does not break the page or appearance switch', async ({
+    page,
+  }) => {
+    const errors: string[] = [];
+    page.on('pageerror', (error) => errors.push(error.message));
+    await page.addInitScript(() => {
+      Object.defineProperty(window, 'localStorage', {
+        get() {
+          throw new DOMException('Storage is unavailable', 'SecurityError');
+        },
+      });
+    });
+    await page.goto('/');
+    await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+    await page.getByRole('button', { name: 'Use light appearance', exact: true }).click();
+    await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
+    expect(errors).toEqual([]);
   });
 });
