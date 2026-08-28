@@ -32,6 +32,8 @@ const projects = defineCollection({
         domain: z.enum(PROJECT_DOMAINS),
         stack: z.array(z.string().min(1)).nonempty(),
         repoUrl: z.string().url(),
+        /** Private repositories keep their case study, but never get a public source link. */
+        repoPrivate: z.boolean().default(false),
         /**
          * A deployed, publicly reachable instance. Optional because most of
          * these projects are research or coursework with nothing to host --

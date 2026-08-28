@@ -7,6 +7,7 @@ summary: >-
 domain: ai-ml
 stack: [Python, LangGraph, NSGA-II, Surrogate Models, RAG]
 repoUrl: https://github.com/GeorgeAnes/vfrm-agentic-design-assistant
+repoPrivate: true
 featured: true
 order: 2
 role: TU/e course 5ARIP10, Team 1, in collaboration with ASML

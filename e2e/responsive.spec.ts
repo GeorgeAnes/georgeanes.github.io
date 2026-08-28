@@ -7,6 +7,7 @@ const PAGES = [
   '/404',
   '/projects/',
   '/projects/process-mining-kpi-dashboard',
+  '/projects/vfrm-agentic-design-assistant/',
   '/blog/',
 ];
 

@@ -15,6 +15,11 @@ Local browser verification passed 205 checks, including both appearances,
 responsive layouts, reduced motion, and navigation without JavaScript. Remote CI
 is still required before merge; deployed Lighthouse scores must be measured again.
 
+The VFRM source repository is private. George approved keeping its existing public
+case study and replacing the source link with "Source code is private". This is an
+explicit exception to the v1 public-source-link requirement; repository visibility,
+case-study claims, and the other eight source links remain unchanged.
+
 - After review, match the complete reference composition, not only its orb.
   Midnight is the initial presentation; an explicit light-theme control retains
   the light counterpart and remembers the visitor's choice. Geist and Geist Mono
