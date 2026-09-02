@@ -7,18 +7,28 @@ summary: >-
 domain: ai-ml
 stack: [Python, FastAPI, React, TF-IDF Retrieval, Local LLM, Azure, Terraform, Docker]
 repoUrl: https://github.com/GeorgeAnes/enterprise-ai-document-risk-auditor
-liveUrl: https://kind-beach-04e83b00f.7.azurestaticapps.net
-liveNote: >-
-  The backend scales to zero when idle, so the first request takes ~20s while a
-  container starts. After that it is under 300ms.
 featured: true
 order: 1
-heroImage: ../../assets/projects/enterprise-ai-document-risk-auditor/screenshot-dashboard.png
+heroImage: ../../assets/projects/enterprise-ai-document-risk-auditor/risk-overview.png
 heroImageAlt: >-
-  The auditor's review dashboard running on the live Azure deployment, showing a
-  risk posture dial reading 79 of 100, a breakdown of thirteen extracted claims
-  by support category, and a ranked list of the highest-risk claims with their
-  labels. The figures shown come from a synthetic sample document.
+  Risk Auditor overview showing a static synthetic preview with a heuristic risk
+  score of 61 out of 100, a High risk posture, and controls to inspect the
+  highest-risk finding.
+figures:
+  - src: ../../assets/projects/enterprise-ai-document-risk-auditor/scan-workspace.png
+    alt: >-
+      Risk Auditor scan page with a large evidence-review headline and a button
+      to run the local synthetic risk scan.
+    caption: >-
+      The local scan entry point uses a bundled synthetic document and remains
+      inspectable without a cloud backend.
+  - src: ../../assets/projects/enterprise-ai-document-risk-auditor/finding-detail.png
+    alt: >-
+      Risk Auditor finding view showing a flagged enterprise claim, a heuristic
+      score of 92, the rationale, and a finding index.
+    caption: >-
+      Each finding keeps the claim, heuristic score, rationale, and source
+      context connected for human review.
 ---
 
 ## Problem
@@ -55,17 +65,22 @@ available would not be auditable.
 
 ## Deployment
 
-The tool runs on Azure, with every resource defined in Terraform and nothing
-clicked into existence in the Portal. The React frontend is served from Static
-Web Apps, the FastAPI backend runs on Container Apps behind a system-assigned
-managed identity, sample documents live in Blob Storage, and Terraform state is
-held remotely so the stack is not tied to one laptop.
+The tool was deployed on Azure, with every resource defined in Terraform and
+nothing manually assembled in the Portal. The React frontend was served from
+Static Web Apps, the FastAPI backend ran on Container Apps behind a
+system-assigned managed identity, sample documents lived in Blob Storage, and
+Terraform state was held remotely so the stack was not tied to one laptop.
 
-The constraint that shaped the design was cost: it had to sit idle at
-effectively nothing. The backend therefore runs at zero minimum replicas, the
-container image is pulled from a public GitHub Container Registry package
-rather than a paid Azure registry, and log ingestion is capped so a chatty
-container stops rather than bills. The result runs at roughly €0/month.
+The public deployment was intentionally retired in September 2026 after the
+infrastructure and recovery path had been demonstrated. The project now remains
+a local, synthetic-data portfolio demo rather than an unneeded standing cloud
+service.
+
+The constraint that shaped the deployment was cost: it had to sit idle within
+free-tier capacity. The backend therefore used zero minimum replicas, the
+container image was pulled from a public GitHub Container Registry package
+rather than a paid Azure registry, and log ingestion was capped. This was a
+cost-control design, not a claim that cloud spend could never occur.
 
 That choice has a visible cost, and the site states it rather than hiding it:
 the first request after an idle period takes about twenty seconds while a
@@ -75,7 +90,7 @@ the wrong trade for a project whose point is that it can sit idle indefinitely.
 The frontend explains this on the first slow request instead of showing a bare
 spinner, because an unexplained twenty-second wait reads as a broken app.
 
-No secrets exist anywhere in the deployment, as a property of the design rather
+No application secrets existed in the deployment, as a property of the design rather
 than of discipline. The container registry is public, so there are no registry
 credentials to hold. Storage shared keys are disabled at the account level, so
 no key or SAS token exists to leak — key-based access is refused by the
@@ -91,14 +106,11 @@ of the recovery, not an afterthought.
 
 ## Evaluation
 
-Two public datasets are used as sanity checks rather than benchmarks, and the
-repository is explicit about the difference. FEVER, whose claims carry supported,
-refuted and not-enough-info labels, checks that risk scores separate in the
-expected direction. CUAD, a corpus of expert-annotated contracts, stress-tests
-ingestion, vague-clause detection and triage on long documents.
-
-Neither is run as a full benchmark, and neither is presented as a measure of
-hallucination-detection accuracy.
+The included examples are synthetic and demonstrate the workflow rather than
+establishing model quality. CUAD can be used locally as a long-document contract
+stress test, but it is not presented as a hallucination-detection benchmark.
+An earlier FEVER experiment was removed after review found that its preparation
+path leaked gold-label information into pipeline inputs.
 
 ## Limitations
 
