@@ -11,6 +11,7 @@ heroImage: ../../assets/projects/camera-calibration-nerfstudio-pipeline/top_view
 heroImageAlt: >-
   Top-down visualization of estimated camera poses arranged around the
   calibration board, showing where each shot was taken from.
+heroFit: contain
 figures:
   - src: ../../assets/projects/camera-calibration-nerfstudio-pipeline/side_view_x.png
     alt: >-

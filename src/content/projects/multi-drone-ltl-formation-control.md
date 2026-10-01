@@ -11,6 +11,7 @@ heroImage: ../../assets/projects/multi-drone-ltl-formation-control/q6_swarm_traj
 heroImageAlt: >-
   Simulated swarm trajectories for leader-follower flocking, with follower paths
   tracking the leader through the workspace.
+heroFit: contain
 figures:
   - src: ../../assets/projects/multi-drone-ltl-formation-control/q4_switching.png
     alt: >-

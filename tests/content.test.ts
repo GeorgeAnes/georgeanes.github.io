@@ -4,13 +4,16 @@ import { join } from 'node:path';
 import { parse } from 'yaml';
 
 /**
- * The nine public project repositories, verified against `gh repo list` on
- * 2026-08-20. `GeorgeAnes` is the GitHub profile repo, not a project, and is
- * deliberately absent. See SPEC.md -> AC2.
+ * The eleven project repositories. Nine were verified against `gh repo list`
+ * on 2026-08-20; `agent-tool-gateway` and `embedding-lab` were added later and
+ * each needs its own public repository. `GeorgeAnes` is the GitHub profile
+ * repo, not a project, and is deliberately absent. See SPEC.md -> AC2.
  */
 const EXPECTED_PROJECT_SLUGS = [
   'aero-mpc-spc-koopman-control',
+  'agent-tool-gateway',
   'camera-calibration-nerfstudio-pipeline',
+  'embedding-lab',
   'enterprise-ai-document-risk-auditor',
   'facial-expression-recognition-ml',
   'multi-drone-ltl-formation-control',
@@ -28,6 +31,8 @@ interface ProjectFrontmatter {
   summary?: unknown;
   stack?: unknown;
   repoUrl?: unknown;
+  featured?: unknown;
+  order?: unknown;
 }
 
 interface ProjectEntry {
@@ -130,6 +135,19 @@ describe('project content collection', () => {
     expect(offenders, `Projects with an empty stack: ${offenders.join(', ')}`).toEqual(
       [],
     );
+  });
+
+  it('features exactly the three projects the home page shows, in order', () => {
+    const featured = entries
+      .filter(({ data }) => data.featured === true)
+      .sort((a, b) => Number(a.data.order) - Number(b.data.order))
+      .map(({ slug }) => slug);
+
+    expect(featured).toEqual([
+      'enterprise-ai-document-risk-auditor',
+      'vfrm-agentic-design-assistant',
+      'agent-tool-gateway',
+    ]);
   });
 
   it('ships no unconfirmed metrics', () => {

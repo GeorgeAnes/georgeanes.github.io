@@ -40,6 +40,26 @@ case-study claims, and the other eight source links remain unchanged.
   deploy without explicit user authorization. Obtain execution approval before
   the first bundled-Chromium Playwright launch; stop on endpoint-security denial.
 
+## Project set extended to eleven 2026-09-30
+
+Two further projects get case studies: `agent-tool-gateway` and `embedding-lab`.
+Each has one hero image and two figures, all real screenshots of the project's
+own web page, so the pages match the other nine. The home page still shows
+exactly three featured projects and the projects index lists eleven.
+
+2026-10-01: the third featured slot passes from `facial-expression-recognition-ml`
+to `agent-tool-gateway`, which is the more relevant project for the target roles.
+The gateway takes `order: 3` and the decorative network cover; the facial
+expression project loses `featured` and `order` and stays in the index as an
+`ai-ml` project. `embedding-lab` is not featured and has no `order`. This
+supersedes Resolved Decision 5 below.
+
+Their source links point at `github.com/GeorgeAnes/agent-tool-gateway` and
+`github.com/GeorgeAnes/embedding-lab`; the link check requires both repositories
+to be public. The auditor case study's Evaluation and Deployment sections are
+updated to match its repository. This supersedes the v1 scope of nine projects:
+AC2, the schema test row and success criteria 2 and 3 below count eleven.
+
 ## Objective
 
 Build and deploy a public portfolio website that presents George Anesiadis as a
@@ -60,10 +80,11 @@ George built, say what problem each solved, and find a way to contact him.
 
 - AC1 — Landing on `/`, a visitor sees who George is and what he does above the fold,
   with no scrolling, on a 1366×768 laptop.
-- AC2 — All **9 project repos** appear as project entries, each with a human-written
+- AC2 — All **11 project repos** appear as project entries, each with a human-written
   summary; **no entry shows an empty description**. (`my-repos.json` lists 10 repos;
   `GeorgeAnes` is the GitHub *profile* repo and is excluded — it is a bio source, not
-  a project. Verified 2026-08-20: those 10 are the complete set of public repos.)
+  a project. Verified 2026-08-20: those 10 are the complete set of public repos, nine
+  of them projects. `agent-tool-gateway` and `embedding-lab` are added to those nine.)
 - AC3 — Projects relevant to ML/AI engineering sort first on the index page.
 - AC4 — Each project has a detail page at `/projects/<slug>/` with problem, approach,
   results, stack, and a link to its GitHub repo.
@@ -203,7 +224,7 @@ Proportionate to a static site — thin at the unit level, meaningful at the pag
 |---|---|---|---|
 | Types | `astro check` | — | Props, collection entry types, config |
 | Unit | Vitest | `tests/**/*.test.ts` | Everything in `src/lib/` — sorting, tag normalization, date formatting |
-| Schema | Vitest | `tests/content.test.ts` | Every content file parses against its Zod schema; all 9 project slugs present; no empty summaries (AC2) |
+| Schema | Vitest | `tests/content.test.ts` | Every content file parses against its Zod schema; all 11 project slugs present; no empty summaries (AC2) |
 | E2E | Playwright | `e2e/*.spec.ts` | Page renders, nav works, project detail pages resolve, contact links present (AC1, AC4, AC5) |
 | A11y | axe-core in Playwright | `e2e/a11y.spec.ts` | Zero serious/critical violations on `/`, a project page, a blog page |
 | Links | `lychee` in CI | workflow | No broken internal or external links |
@@ -247,10 +268,10 @@ does not apply to markup and styling, which are verified visually and by E2E.
 Done means every one of these is objectively true:
 
 1. `npm run verify` exits 0 from a clean `npm ci` on Node 24.
-2. All 9 project repos have a content file with a non-empty `summary` and a reachable
+2. All 11 project repos have a content file with a non-empty `summary` and a reachable
    `repoUrl`; `tests/content.test.ts` enforces this and fails if a slug is missing or
    an unexpected one appears. *(AC2)*
-3. `/`, `/projects/`, `/projects/<slug>/` (×9), `/blog/`, and `/404` all build and
+3. `/`, `/projects/`, `/projects/<slug>/` (×11), `/blog/`, and `/404` all build and
    return 200 from `npm run preview`. *(AC4)*
 4. Lighthouse on the deployed `/`: Performance ≥ 95, Accessibility = 100, Best
    Practices ≥ 95, SEO = 100, mobile profile.
@@ -295,8 +316,10 @@ Approved 2026-08-20. Recorded here because downstream tasks depend on them.
    problem, approach, and results, plus **46 figures/screenshots** in total. Drafting
    is therefore summarization from primary source, not invention. Numeric results still
    require George's confirmation before they ship (Never-do rule).
-5. **Featured set — RESOLVED (default accepted).** `enterprise-ai-document-risk-auditor`,
-   `vfrm-agentic-design-assistant`, `facial-expression-recognition-ml`.
+5. **Featured set — RESOLVED (default accepted), superseded 2026-10-01.**
+   `enterprise-ai-document-risk-auditor`, `vfrm-agentic-design-assistant`,
+   `facial-expression-recognition-ml`. The third is now `agent-tool-gateway`; see
+   "Project set extended to eleven".
 6. **Blog at launch — RESOLVED (default accepted).** Build `/blog/` so it renders with
    zero posts; hide it from primary nav until a post exists (AC6).
 

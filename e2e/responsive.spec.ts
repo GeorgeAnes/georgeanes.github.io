@@ -74,7 +74,7 @@ test.describe('without JavaScript', () => {
     });
     await page.getByRole('link', { name: 'View projects', exact: true }).click();
     await expect(page).toHaveURL(/\/projects\/$/);
-    await expect(page.locator('article')).toHaveCount(9);
+    await expect(page.locator('article')).toHaveCount(11);
   });
 
   for (const path of PAGES) {

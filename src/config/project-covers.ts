@@ -14,9 +14,9 @@ export const projectCovers: Record<string, { image: ImageMetadata; summary: stri
     summary:
       'Agentic exploration of engineering design spaces, from models to decisions.',
   },
-  'facial-expression-recognition-ml': {
+  'agent-tool-gateway': {
     image: network,
     summary:
-      'A transparent classical machine-learning baseline for facial expression recognition.',
+      'Three ways to give an agent its tools, compared with fifteen executed attacks.',
   },
 };

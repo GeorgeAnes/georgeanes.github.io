@@ -60,6 +60,13 @@ const projects = defineCollection({
         heroImage: image().optional(),
         heroImageAlt: z.string().min(1).optional(),
         /**
+         * How the hero fills its 16:10 frame on the project grid. `cover`
+         * crops from the bottom, which suits screenshots whose titles sit at
+         * the top. `contain` shows the whole image on white, for plots and
+         * diagrams that carry labels at their edges.
+         */
+        heroFit: z.enum(['cover', 'contain']).default('cover'),
+        /**
          * Supporting figures. Capped at two so that hero plus figures never
          * exceeds the approved three-images-per-project budget. The cap lives
          * here rather than in a review checklist so the build enforces it.

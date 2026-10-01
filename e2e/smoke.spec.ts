@@ -16,7 +16,7 @@ test('private-source case studies stay reachable without a broken source link', 
   });
 
   await page.goto('/projects/');
-  await expect(page.locator('article')).toHaveCount(9);
+  await expect(page.locator('article')).toHaveCount(11);
   await page
     .getByRole('link', { name: 'VFRM Agentic Design Assistant', exact: true })
     .click();
