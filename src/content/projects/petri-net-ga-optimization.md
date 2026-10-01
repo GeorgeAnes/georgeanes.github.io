@@ -14,6 +14,7 @@ heroImage: ../../assets/projects/petri-net-ga-optimization/task1_best_fitness.pn
 heroImageAlt: >-
   Convergence curve of best fitness against generation for the baseline genetic
   algorithm run.
+heroFit: contain
 figures:
   - src: ../../assets/projects/petri-net-ga-optimization/task2_operator_boxplot.png
     alt: >-

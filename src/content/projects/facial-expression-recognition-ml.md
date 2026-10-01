@@ -7,8 +7,6 @@ summary: >-
 domain: ai-ml
 stack: [Python, OpenCV, scikit-learn, HOG, SVM]
 repoUrl: https://github.com/GeorgeAnes/facial-expression-recognition-ml
-featured: true
-order: 3
 role: University project, curated public version
 results:
   - Accuracy 0.523 on the public test split
@@ -18,6 +16,7 @@ heroImageAlt: >-
   Pipeline diagram running from a camera or FER2013 image through face detection
   and cropping, 48x48 grayscale normalization, HOG feature extraction and a
   scaler plus classifier, to an emotion label with a confidence value.
+heroFit: contain
 figures:
   - src: ../../assets/projects/facial-expression-recognition-ml/model_comparison.png
     alt: Bar chart comparing accuracy across the classical models that were trained.

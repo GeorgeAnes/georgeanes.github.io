@@ -38,7 +38,7 @@ recommendations that people then act on. Fluency is not the risk. The risk is
 whether the load-bearing claims in a document are actually supported by
 evidence, scoped correctly, and safe for a reviewer to approve.
 
-Reading a generated report end to end and checking every assertion by hand does
+Reading a generated report end to end and checking every assertion manually does
 not scale, and the reviewer has no systematic way to see which claims deserve
 their attention first.
 
@@ -68,8 +68,9 @@ available would not be auditable.
 The tool was deployed on Azure, with every resource defined in Terraform and
 nothing manually assembled in the Portal. The React frontend was served from
 Static Web Apps, the FastAPI backend ran on Container Apps behind a
-system-assigned managed identity, sample documents lived in Blob Storage, and
-Terraform state was held remotely so the stack was not tied to one laptop.
+system-assigned managed identity, sample documents were uploaded to Blob
+Storage, and Terraform state was held remotely so the stack was not tied to one
+laptop.
 
 The public deployment was intentionally retired in September 2026 after the
 infrastructure and recovery path had been demonstrated. The project now remains
@@ -82,26 +83,35 @@ container image was pulled from a public GitHub Container Registry package
 rather than a paid Azure registry, and log ingestion was capped. This was a
 cost-control design, not a claim that cloud spend could never occur.
 
-That choice has a visible cost, and the site states it rather than hiding it:
-the first request after an idle period takes about twenty seconds while a
-container cold-starts, against roughly 300ms once warm. Keeping a container
-resident would remove the wait and replace it with a permanent monthly bill —
-the wrong trade for a project whose point is that it can sit idle indefinitely.
-The frontend explains this on the first slow request instead of showing a bare
-spinner, because an unexplained twenty-second wait reads as a broken app.
+That choice had a visible cost, and the deployed site stated it rather than
+hiding it: the first request after an idle period took about twenty seconds
+while a container cold-started, against roughly 300ms once warm. Keeping a
+container resident would have removed the wait and replaced it with a permanent
+monthly bill, the wrong trade for a project whose point was that it could sit
+idle indefinitely. The frontend explained this on the first slow request instead
+of showing a bare spinner, because an unexplained twenty-second wait reads as a
+broken app.
 
-No application secrets existed in the deployment, as a property of the design rather
-than of discipline. The container registry is public, so there are no registry
-credentials to hold. Storage shared keys are disabled at the account level, so
-no key or SAS token exists to leak — key-based access is refused by the
-platform, including for Terraform itself, which authenticates with Entra ID.
-The backend identity holds exactly one role, scoped to the single blob
-container it reads, rather than to the storage account.
+No application secrets existed in the deployment. The container registry was
+public, so there were no registry credentials to hold. Shared keys were disabled
+on the storage account that held the samples, so no key or SAS token existed to
+leak there. Key-based access was refused by the platform, including for
+Terraform itself, which authenticated with Entra ID. Two things sat outside that
+statement. The Static Web Apps deployment token was a sensitive Terraform output
+that the application never read; it was printed once and rotated, so its
+handling depended on discipline. And the separate Terraform-state storage
+account still had shared keys enabled, although Terraform and the operator
+reached it with Entra ID.
 
-The stack was destroyed and rebuilt from scratch to prove it is reproducible
+The backend identity held exactly one role, scoped to the single blob container
+of samples rather than to the storage account. That grant was provisioned and
+checked by listing it, but the app served its samples from the container image,
+so nothing read a blob with that identity.
+
+The stack was destroyed and rebuilt from scratch to prove it was reproducible
 rather than merely deployable once. That exercise surfaced something worth
-knowing: Azure assigns new hostnames on recreate, and since the API URL is
-compiled into the frontend bundle at build time, a rebuild and redeploy is part
+knowing: Azure assigned new hostnames on recreate, and since the API URL was
+compiled into the frontend bundle at build time, a rebuild and redeploy was part
 of the recovery, not an afterthought.
 
 ## Evaluation
@@ -109,8 +119,28 @@ of the recovery, not an afterthought.
 The included examples are synthetic and demonstrate the workflow rather than
 establishing model quality. CUAD can be used locally as a long-document contract
 stress test, but it is not presented as a hallucination-detection benchmark.
-An earlier FEVER experiment was removed after review found that its preparation
-path leaked gold-label information into pipeline inputs.
+
+A separate retrieval benchmark in `evals/retrieval` compares the tool's shipped
+TF-IDF scorer with sublinear TF-IDF, BM25, LSA, static dense vectors and
+reciprocal rank fusion. It runs on SQuAD dev-v1.1 (10,570 questions over 2,067
+paragraphs) and on CUAD-QA (6,500 queries over 501 contracts, split into
+sentences by the tool's own chunker), and reports nDCG@10 with bootstrap
+intervals over whole paragraphs or contracts. On SQuAD, BM25 scores 0.846
+against 0.750 for the shipped scorer, and sublinear TF-IDF scores 0.825, which
+recovers about three quarters of that gain, so most of it comes from how term
+frequency is weighted. On CUAD sentences the shipped scorer, sublinear TF-IDF
+and two BM25 settings lie between 0.316 and 0.332. Static dense vectors score
+below the shipped scorer on both sets. Fusing the dense vectors with BM25 lowers
+nDCG@10 on SQuAD by 0.051 and raises it on CUAD by 0.009.
+
+These sets test query-to-passage retrieval. They do not test claim-to-evidence
+retrieval, which is the tool's task, and CUAD's queries are 41 fixed category
+prompts. The dense row is a static embedding model, so it says nothing about
+transformer embeddings. Each run also scores the rankings against gold labels
+dealt to other queries, as a check that the scores depend on the labels. An
+earlier FEVER experiment was removed after review found that its preparation
+path leaked gold-label information into pipeline inputs; the code stays in the
+repository history.
 
 ## Limitations
 

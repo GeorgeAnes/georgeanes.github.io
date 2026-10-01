@@ -14,6 +14,7 @@ heroImage: ../../assets/projects/smartphone-activity-recognition/har_lopo_result
 heroImageAlt: >-
   Results chart for leave-one-participant-out validation, showing balanced
   accuracy per held-out participant and the spread between them.
+heroFit: contain
 figures:
   - src: ../../assets/projects/smartphone-activity-recognition/har_feature_importance.png
     alt: >-

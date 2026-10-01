@@ -19,7 +19,8 @@ interface Props {
 const { src, alt, caption, priority = false } = Astro.props;
 ---
 
-<figure class="my-8">
+{/* Capped at the intrinsic width so a small source is never stretched past 1x. */}
+<figure class="mx-auto my-8" style={`max-width: ${src.width}px`}>
   <div class="border-border bg-surface rounded-lg overflow-hidden border">
     {
       /*

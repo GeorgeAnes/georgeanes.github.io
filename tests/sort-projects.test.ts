@@ -86,20 +86,23 @@ describe('sortProjects', () => {
     expect(ids(input)).toEqual(snapshot);
   });
 
-  it('orders the real nine-project set with the ML/AI work first', () => {
+  it('orders the real eleven-project set with the ML/AI work first', () => {
+    // Deliberately listed alphabetically, which is not the expected order.
     const input = [
       project('aero-mpc-spc-koopman-control', { domain: 'control-robotics' }),
-      project('process-mining-kpi-dashboard', { domain: 'data-optimization' }),
+      project('agent-tool-gateway', { featured: true, domain: 'ai-ml', order: 3 }),
+      project('camera-calibration-nerfstudio-pipeline', { domain: 'ai-ml' }),
+      project('embedding-lab', { domain: 'ai-ml' }),
       project('enterprise-ai-document-risk-auditor', {
         featured: true,
         domain: 'ai-ml',
         order: 1,
       }),
-      project('facial-expression-recognition-ml', {
-        featured: true,
-        domain: 'ai-ml',
-        order: 3,
-      }),
+      project('facial-expression-recognition-ml', { domain: 'ai-ml' }),
+      project('multi-drone-ltl-formation-control', { domain: 'control-robotics' }),
+      project('petri-net-ga-optimization', { domain: 'data-optimization' }),
+      project('process-mining-kpi-dashboard', { domain: 'data-optimization' }),
+      project('smartphone-activity-recognition', { domain: 'ai-ml' }),
       project('vfrm-agentic-design-assistant', {
         featured: true,
         domain: 'ai-ml',
@@ -110,9 +113,15 @@ describe('sortProjects', () => {
     expect(ids(sortProjects(input))).toEqual([
       'enterprise-ai-document-risk-auditor',
       'vfrm-agentic-design-assistant',
+      'agent-tool-gateway',
+      'camera-calibration-nerfstudio-pipeline',
+      'embedding-lab',
       'facial-expression-recognition-ml',
+      'smartphone-activity-recognition',
+      'petri-net-ga-optimization',
       'process-mining-kpi-dashboard',
       'aero-mpc-spc-koopman-control',
+      'multi-drone-ltl-formation-control',
     ]);
   });
 });

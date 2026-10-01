@@ -15,6 +15,7 @@ heroImage: ../../assets/projects/aero-mpc-spc-koopman-control/Task4_final_compar
 heroImageAlt: >-
   Comparison plot of pitch and yaw tracking responses for the controllers in the
   benchmark, shown against the reference trajectory.
+heroFit: contain
 figures:
   - src: ../../assets/projects/aero-mpc-spc-koopman-control/Task4_KoopmanSPC_Final_outputs.png
     alt: >-

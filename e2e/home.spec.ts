@@ -104,6 +104,13 @@ test.describe('home page', () => {
 
     const projectLinks = page.locator('a[href^="/projects/"]:not([href="/projects/"])');
     await expect(projectLinks).toHaveCount(3);
+    expect(
+      await projectLinks.evaluateAll((links) => links.map((a) => a.getAttribute('href'))),
+    ).toEqual([
+      '/projects/enterprise-ai-document-risk-auditor/',
+      '/projects/vfrm-agentic-design-assistant/',
+      '/projects/agent-tool-gateway/',
+    ]);
 
     await expect(page.locator('a[href="/projects/"]')).not.toHaveCount(0);
   });
