@@ -44,7 +44,10 @@ jobs:
         run: npm run verify
 
       # Runs against the built output, so it checks the links a visitor would
-      # actually follow rather than the ones written in source.
+      # actually follow rather than the ones written in source. The site's own
+      # absolute URLs (canonical links) are excluded: a new page's canonical URL
+      # cannot exist until this build is deployed. Internal links are relative
+      # and are still resolved against dist/.
       - name: Check links
         uses: lycheeverse/lychee-action@v2
         with:
@@ -55,6 +58,7 @@ jobs:
             --include-mail=false
             --root-dir ${{ github.workspace }}/dist
             --exclude-path dist/og
+            --exclude '^https://georgeanes\.github\.io/'
             'dist/**/*.html'
           fail: true
 
