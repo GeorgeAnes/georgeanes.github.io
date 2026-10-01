@@ -1,5 +1,28 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, type Page } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
+
+/*
+ * The hero fades in over 700 ms after a 120 ms delay, and axe measures the
+ * colour on screen while that runs, so a scan that starts early reports a
+ * contrast the page never settles at. Wait for the timed animations so the
+ * scan sees the settled page. Scroll- and view-driven animations advance only
+ * when the page scrolls, so they never finish by themselves and are not awaited.
+ */
+async function waitForTimedAnimations(page: Page, timeoutMs = 5000) {
+  await page.evaluate(async (limit) => {
+    const timed = document
+      .getAnimations()
+      .filter((animation) => animation.timeline instanceof DocumentTimeline)
+      .map((animation) => animation.finished.catch(() => undefined));
+    const timer = new Promise<never>((_, reject) =>
+      setTimeout(
+        () => reject(new Error(`animations still running after ${limit} ms`)),
+        limit,
+      ),
+    );
+    await Promise.race([Promise.all(timed), timer]);
+  }, timeoutMs);
+}
 
 const PAGES = [
   { name: 'home', path: '/' },
@@ -15,6 +38,7 @@ for (const { name, path } of PAGES) {
     page,
   }) => {
     await page.goto(path);
+    await waitForTimedAnimations(page);
 
     const { violations } = await new AxeBuilder({ page })
       .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
